@@ -4,7 +4,7 @@ import "../Root.css";
 export default function Root() {
   return (
     <>
-      <nav>
+      <nav className="nav">
         <ul>
           <li>
             <Link to="/">Home</Link>
