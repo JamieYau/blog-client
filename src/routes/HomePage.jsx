@@ -1,44 +1,8 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useLoaderData, Link } from "react-router-dom";
+import { getPosts } from "../api"
 
-function HomePage() {
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    // Fetch the list of blog posts from your API
-    const fetchPosts = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/api/posts");
-        if (!response.ok) {
-          throw new Error("Failed to fetch posts");
-        }
-        const data = await response.json();
-        setPosts(data.data); // Assuming the response contains an array of posts
-
-        // Fetch the author's name for each post
-        const postsWithAuthors = await Promise.all(
-          data.data.map(async (post) => {
-            const authorResponse = await fetch(
-              `http://localhost:3000/api/users/${post.authorId}`
-            );
-            if (!authorResponse.ok) {
-              throw new Error("Failed to fetch author details");
-            }
-            const authorData = await authorResponse.json();
-            return {
-              ...post,
-              author: authorData.data.username, // Assuming the response contains the author's username
-            };
-          })
-        );
-        setPosts(postsWithAuthors);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      }
-    };
-
-    fetchPosts();
-  }, []); // Run once on component mount
+export default function HomePage() {
+  const posts = useLoaderData();
 
   return (
     <div className="Home">
@@ -54,4 +18,8 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+// loader function
+export async function loader () {
+  const posts = await getPosts(); // Fetch posts data from your API
+  return posts;
+}

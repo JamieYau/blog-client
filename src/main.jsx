@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import Root from "./routes/Root.jsx"
 import ErrorPage from './routes/ErrorPage.jsx'
-import HomePage from "./routes/HomePage.jsx"
+import HomePage, { loader as homePageLoader } from "./routes/HomePage.jsx";
 import PostPage from './routes/PostPage.jsx'
 
 import './index.css'
@@ -18,6 +18,7 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <HomePage />,
+        loader: homePageLoader, // Assign the loader function to the route
       },
       {
         path: "posts/:postId",
