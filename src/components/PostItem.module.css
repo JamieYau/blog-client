@@ -1,0 +1,22 @@
+.postItem {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.postTitle {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.postAuthor {
+  font-style: italic;
+  margin-bottom: 5px;
+}
+
+.postDate {
+  font-size: 0.8rem;
+  color: #666;
+}

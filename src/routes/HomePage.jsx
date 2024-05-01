@@ -1,5 +1,6 @@
-import { useLoaderData, Link } from "react-router-dom";
-import { getPosts } from "../api"
+import { useLoaderData } from "react-router-dom";
+import { getPosts } from "../api";
+import PostItem from "../components/PostItem";
 
 export default function HomePage() {
   const posts = useLoaderData();
@@ -9,9 +10,7 @@ export default function HomePage() {
       <h2>Blog Posts</h2>
       <ul>
         {posts.map((post) => (
-          <li key={post._id}>
-            <Link to={`/posts/${post._id}`}>{post.title}</Link> by {post.author}
-          </li>
+          <PostItem key={post._id} post={post} />
         ))}
       </ul>
     </div>
@@ -19,7 +18,7 @@ export default function HomePage() {
 }
 
 // loader function
-export async function loader () {
+export async function loader() {
   const posts = await getPosts(); // Fetch posts data from your API
   return posts;
 }
