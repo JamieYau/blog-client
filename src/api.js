@@ -32,3 +32,20 @@ export async function getPosts() {
   }
   return posts;
 }
+
+// Function to fetch a single post by its postId
+export async function getPost(postId) {
+  try {
+    const response = await fetch(`http://localhost:3000/api/posts/${postId}`);
+    const data = await response.json();
+    const post = data.data;
+    if (data.success) {
+      return post; // Return the post data if successful
+    } else {
+      throw new Error("Failed to fetch post: " + data.error);
+    }
+  } catch (error) {
+    console.error("Error fetching post:", error);
+    throw error; // Re-throw the error for the caller to handle
+  }
+}

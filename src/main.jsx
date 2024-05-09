@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Root from "./routes/Root.jsx"
 import ErrorPage from './routes/ErrorPage.jsx'
 import HomePage, { loader as homePageLoader } from "./routes/HomePage.jsx";
-import PostPage from './routes/PostPage.jsx'
+import PostPage, { loader as postLoader} from './routes/PostPage.jsx'
 
 import './index.css'
 
@@ -23,6 +23,7 @@ const router = createBrowserRouter([
       {
         path: "posts/:postId",
         element: <PostPage />,
+        loader: postLoader,
       },
     ],
   },
