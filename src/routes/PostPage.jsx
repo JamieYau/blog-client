@@ -6,7 +6,8 @@ export default function PostPage() {
   return (
     <div>
       <h2>{post.title}</h2>
-      <p>Author: {post.authorId}</p>
+      <p>AuthorId: {post.authorId}</p>
+      <p>Author: {post.author}</p>
       <p>Published: {post.published ? "Yes" : "No"}</p>
       <p>Created At: {new Date(post.createdAt).toLocaleString()}</p>
       <p>Updated At: {new Date(post.updatedAt).toLocaleString()}</p>
