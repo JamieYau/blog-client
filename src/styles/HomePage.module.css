@@ -1,0 +1,9 @@
+.homePage {
+  margin: 1rem;
+}
+
+.postList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

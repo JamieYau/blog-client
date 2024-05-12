@@ -1,9 +1,12 @@
 .postItem {
-  background-color: #dcdcdc;
-  border: 1px solid #000000;
+  padding: 1rem;
+  background-color: #1f2937;
+  border: 1px solid #363f4b;
   border-radius: 5px;
-  padding: 20px;
-  margin-bottom: 20px;
+}
+
+.postItem a {
+  color: #d1d5db;
 }
 
 .postTitle {
