@@ -7,7 +7,7 @@ export async function getPosts() {
     if (!postsData.success) {
       throw new Error("Failed to fetch post: " + postsData.errors);
     }
-    posts = postsData.data; // Assuming the response contains an array of posts
+    posts = postsData.data;
 
     // Fetch the author's name for each post
     const postsWithAuthors = await Promise.all(
@@ -25,7 +25,7 @@ export async function getPosts() {
 
         return {
           ...post,
-          author: authorData.data.username, // Assuming the response contains the author's username
+          author: authorData.data.username,
         };
       })
     );
@@ -73,4 +73,44 @@ export async function getPost(postId) {
     console.error("Error fetching post:", error);
     throw error; // Re-throw the error for the caller to handle
   }
+}
+
+// Function to get all comments for a post
+export async function getPostComments(postId) {
+    let comments;
+    // Fetch the list of blog comments from your API
+    try {
+      const response = await fetch(`http://localhost:3000/api/posts/${postId}/comments`);
+      const commentsData = await response.json();
+      if (!commentsData.success) {
+        throw new Error("Failed to fetch comments: " + commentsData.errors);
+      }
+      comments = commentsData.data;
+
+      // Fetch the author's name for each comment
+      const commentsWithAuthors = await Promise.all(
+        comments.map(async (comment) => {
+          const authorResponse = await fetch(
+            `http://localhost:3000/api/users/${comment.authorId}`
+          );
+          const authorData = await authorResponse.json();
+
+          if (!authorData.success) {
+            throw new Error(
+              "Failed to fetch author details for post: " + authorData.errors
+            );
+          }
+
+          return {
+            ...comment,
+            author: authorData.data.username,
+          };
+        })
+      );
+      comments = commentsWithAuthors;
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+      return null;
+    }
+    return comments;
 }

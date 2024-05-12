@@ -1,3 +1,7 @@
+.postPage {
+  padding: 2rem;
+}
+
 .postTitle {
   font-size: 3rem;
 }
@@ -7,13 +11,52 @@
 }
 
 .postDetails > * {
-    padding: 0em 1em;
+  padding: 0em 1em;
 }
 
 .postAuthor {
-  border-right: 1px solid white;
+  padding-left: 0;
+  border-right: 1px solid #e5e7eb;
 }
 
 .postContent {
-    
+  margin: 1rem 0;
+}
+
+.postContent, .commentSection {
+  padding: 1rem;
+  background-color: #1f2937;
+  border: 1px solid #363f4b;
+  border-radius: 5px;
+}
+
+.commentHeader {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+}
+
+.comments {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.comment {
+  background-color: rgba(55, 65, 81, 0.5);
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.commentAuthor {
+  font-size: 1.1rem;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.commentCreatedAt {
+  font-size: 0.8rem;
+}
+
+.commentContent {
+  margin-top: 0.1em;
 }
