@@ -1,0 +1,19 @@
+.postTitle {
+  font-size: 3rem;
+}
+
+.postDetails {
+  display: flex;
+}
+
+.postDetails > * {
+    padding: 0em 1em;
+}
+
+.postAuthor {
+  border-right: 1px solid white;
+}
+
+.postContent {
+    
+}

@@ -6,7 +6,7 @@ export default function HomePage() {
   const posts = useLoaderData();
 
   return (
-    <div className="Home">
+    <div className="home-page">
       <h2>Blog Posts</h2>
       <ul>
         {posts.map((post) => (

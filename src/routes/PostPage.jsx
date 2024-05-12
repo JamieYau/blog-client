@@ -1,17 +1,21 @@
 import { useLoaderData } from "react-router-dom";
 import { getPost } from "../api";
+import styles from "../styles/PostPage.module.css";
 
 export default function PostPage() {
   const { post } = useLoaderData();
   return (
-    <div>
-      <h2>{post.title}</h2>
-      <p>AuthorId: {post.authorId}</p>
-      <p>Author: {post.author}</p>
-      <p>Published: {post.published ? "Yes" : "No"}</p>
-      <p>Created At: {new Date(post.createdAt).toLocaleString()}</p>
-      <p>Updated At: {new Date(post.updatedAt).toLocaleString()}</p>
-      <p>Content: {post.content}</p>
+    <div className={styles.postPage}>
+      <h2 className={styles.postTitle}>{post.title}</h2>
+      <div className={styles.postDetails}>
+        <p className={styles.postAuthor}>{post.author}</p>
+        <p className={styles.postCreatedAt}>
+          {new Date(post.createdAt).toLocaleDateString()}
+        </p>
+      </div>
+      <div className={styles.postContent}>
+        <p>{post.content}</p>
+      </div>
     </div>
   );
 }
