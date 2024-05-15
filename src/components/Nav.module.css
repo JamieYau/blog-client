@@ -1,4 +1,13 @@
 .nav {
   display: flex;
   padding: 1em;
+  border-bottom: 1px solid #1f2937;
+}
+
+.nav a {
+  display: flex;
+}
+
+.logo {
+  height: 30px;
 }

@@ -8,6 +8,8 @@
 
 .postDetails {
   display: flex;
+  color: #9ca3af;
+  font-weight: 500;
 }
 
 .postDetails > * {
@@ -16,7 +18,7 @@
 
 .postAuthor {
   padding-left: 0;
-  border-right: 1px solid #e5e7eb;
+  border-right: 1px solid #9ca3af;
 }
 
 .postContent {
