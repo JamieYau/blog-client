@@ -3,9 +3,17 @@
   line-height: 1.5;
   font-weight: 400;
 
+  --background-color: #111827;
+  --primary-color: #1f2937;
+  --secondary-color: #37415180;
+  --accent-color: #00c96d;
+  --border-color: #363f4b;
+  --text-color: #e5e7eb;
+  --text-secondary-color: #9ca3af;
+
   color-scheme: light dark;
-  color: #e5e7eb;
-  background-color: #111827;
+  color: var(--text-color);
+  background-color: var(--background-color);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -21,9 +29,13 @@
 
 a {
   font-weight: 500;
-  color: #00c96d;
-  text-decoration: inherit;
+  text-decoration: none;
 }
+
+a:visited {
+  color: inherit;
+}
+
 a:hover {
   color: #00c96d;
 }

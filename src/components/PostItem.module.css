@@ -1,12 +1,8 @@
 .postItem {
   padding: 1rem;
-  background-color: #1f2937;
-  border: 1px solid #363f4b;
+  background-color: var(--primary-color);
+  border: 1px solid var(--border-color);
   border-radius: 5px;
-}
-
-.postItem a {
-  color: #d1d5db;
 }
 
 .postTitle {
@@ -21,5 +17,5 @@
 
 .postDate {
   font-size: 0.8rem;
-  color: #666;
+  color: var(--text-secondary-color);
 }
