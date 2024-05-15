@@ -1,16 +1,11 @@
-import { Link, Outlet } from "react-router-dom";
+import Nav from "../components/Nav";
+import { Outlet } from "react-router-dom";
 import "../Root.css";
 
 export default function Root() {
   return (
     <>
-      <nav className="nav">
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-        </ul>
-      </nav>
+      <Nav/>
       <main>
         <Outlet />
       </main>

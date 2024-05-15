@@ -2,6 +2,11 @@
   margin: 1rem;
 }
 
+.header {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
 .postList {
   display: flex;
   flex-direction: column;

@@ -8,7 +8,7 @@ export default function HomePage() {
 
   return (
     <div className={styles.homePage}>
-      <h2>Blog Posts</h2>
+      <h2 className={styles.header}>Blog Posts</h2>
       <ul className={styles.postList}>
         {posts.map((post) => (
           <PostItem key={post._id} post={post} />
