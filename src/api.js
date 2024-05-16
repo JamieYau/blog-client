@@ -1,8 +1,21 @@
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+export async function login(username, password) {
+  const response = await fetch(`${BASE_URL}/auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ username, password }),
+  });
+  return response.json();
+}
+
 export async function getPosts() {
   let posts;
   // Fetch the list of blog posts from your API
   try {
-    const response = await fetch("http://localhost:3000/api/posts");
+    const response = await fetch(`${BASE_URL}/posts`);
     const postsData = await response.json();
     if (!postsData.success) {
       throw new Error("Failed to fetch post: " + postsData.errors);
@@ -13,7 +26,7 @@ export async function getPosts() {
     const postsWithAuthors = await Promise.all(
       posts.map(async (post) => {
         const authorResponse = await fetch(
-          `http://localhost:3000/api/users/${post.authorId}`
+          `${BASE_URL}/users/${post.authorId}`
         );
         const authorData = await authorResponse.json();
 
@@ -41,7 +54,7 @@ export async function getPosts() {
 export async function getPost(postId) {
   try {
     // Fetch the post data from your API
-    const response = await fetch(`http://localhost:3000/api/posts/${postId}`);
+    const response = await fetch(`${BASE_URL}/posts/${postId}`);
     const postData = await response.json();
 
     if (!postData.success) {
@@ -51,9 +64,7 @@ export async function getPost(postId) {
     const post = postData.data;
 
     // Fetch the author's name for the post
-    const authorResponse = await fetch(
-      `http://localhost:3000/api/users/${post.authorId}`
-    );
+    const authorResponse = await fetch(`${BASE_URL}/users/${post.authorId}`);
     const authorData = await authorResponse.json();
 
     if (!authorData.success) {
@@ -77,40 +88,40 @@ export async function getPost(postId) {
 
 // Function to get all comments for a post
 export async function getPostComments(postId) {
-    let comments;
-    // Fetch the list of blog comments from your API
-    try {
-      const response = await fetch(`http://localhost:3000/api/posts/${postId}/comments`);
-      const commentsData = await response.json();
-      if (!commentsData.success) {
-        throw new Error("Failed to fetch comments: " + commentsData.errors);
-      }
-      comments = commentsData.data;
-
-      // Fetch the author's name for each comment
-      const commentsWithAuthors = await Promise.all(
-        comments.map(async (comment) => {
-          const authorResponse = await fetch(
-            `http://localhost:3000/api/users/${comment.authorId}`
-          );
-          const authorData = await authorResponse.json();
-
-          if (!authorData.success) {
-            throw new Error(
-              "Failed to fetch author details for post: " + authorData.errors
-            );
-          }
-
-          return {
-            ...comment,
-            author: authorData.data.username,
-          };
-        })
-      );
-      comments = commentsWithAuthors;
-    } catch (error) {
-      console.error("Error fetching comments:", error);
-      return null;
+  let comments;
+  // Fetch the list of blog comments from your API
+  try {
+    const response = await fetch(`${BASE_URL}/posts/${postId}/comments`);
+    const commentsData = await response.json();
+    if (!commentsData.success) {
+      throw new Error("Failed to fetch comments: " + commentsData.errors);
     }
-    return comments;
+    comments = commentsData.data;
+
+    // Fetch the author's name for each comment
+    const commentsWithAuthors = await Promise.all(
+      comments.map(async (comment) => {
+        const authorResponse = await fetch(
+          `${BASE_URL}/users/${comment.authorId}`
+        );
+        const authorData = await authorResponse.json();
+
+        if (!authorData.success) {
+          throw new Error(
+            "Failed to fetch author details for post: " + authorData.errors
+          );
+        }
+
+        return {
+          ...comment,
+          author: authorData.data.username,
+        };
+      })
+    );
+    comments = commentsWithAuthors;
+  } catch (error) {
+    console.error("Error fetching comments:", error);
+    return null;
+  }
+  return comments;
 }
