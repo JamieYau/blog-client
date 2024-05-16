@@ -1,16 +1,5 @@
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export async function login(username, password) {
-  const response = await fetch(`${BASE_URL}/auth/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ username, password }),
-  });
-  return response.json();
-}
-
 export async function getPosts() {
   let posts;
   // Fetch the list of blog posts from your API
@@ -124,4 +113,28 @@ export async function getPostComments(postId) {
     return null;
   }
   return comments;
+}
+
+export async function login(username, password) {
+  const response = await fetch(`${BASE_URL}/auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ username, password }),
+  });
+  return response.json();
+}
+
+export async function postComment(postId, comment) {
+  const token = localStorage.getItem("token");
+  const response = await fetch(`${BASE_URL}/posts/${postId}/comments`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(comment),
+  });
+  return response.json();
 }

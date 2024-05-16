@@ -1,9 +1,25 @@
-import { useLoaderData } from "react-router-dom";
-import { getPost, getPostComments } from "../api";
+import { useState } from "react";
+import { useLoaderData, redirect } from "react-router-dom";
+import { getPost, getPostComments, postComment } from "../api";
 import styles from "../styles/PostPage.module.css";
 
 export default function PostPage() {
   const { post, comments } = useLoaderData();
+  const [newComment, setNewComment] = useState("");
+  const token = localStorage.getItem("token");
+
+  const handlePostComment = async (e) => {
+    e.preventDefault();
+    if (!token) {
+      return redirect("/login");
+    }
+    try {
+      await postComment(post._id, { content: newComment });
+      // Reload comments or handle state update
+    } catch (error) {
+      console.error("Error posting comment", error);
+    }
+  };
   return (
     <div className={styles.postPage}>
       <h2 className={styles.postTitle}>{post.title}</h2>
@@ -18,6 +34,25 @@ export default function PostPage() {
       </div>
       <section className={styles.commentSection}>
         <h2 className={styles.commentHeader}>Comments</h2>
+        {token ? (
+          <form onSubmit={handlePostComment} className={styles.commentForm}>
+            <textarea
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              className={styles.commentInput}
+              placeholder="Add a comment..."
+            />
+            <button type="submit" className={styles.commentButton}>
+              Post Comment
+            </button>
+          </form>
+        ) : (
+          <p>
+            <button onClick={() => redirect("/login")}>
+              Login to post a comment
+            </button>
+          </p>
+        )}
         <ul className={styles.comments}>
           {comments.map((comment) => (
             <li key={comment._id} className={styles.comment}>
