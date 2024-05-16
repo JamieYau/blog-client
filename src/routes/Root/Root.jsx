@@ -1,11 +1,11 @@
-import Nav from "../components/Nav";
+import Nav from "../../components/Nav/Nav";
 import { Outlet } from "react-router-dom";
-import "../Root.css";
+import "./Root.css";
 
 export default function Root() {
   return (
     <>
-      <Nav/>
+      <Nav />
       <main>
         <Outlet />
       </main>

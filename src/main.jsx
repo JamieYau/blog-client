@@ -2,11 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Root from "./routes/Root.jsx";
-import ErrorPage from "./routes/ErrorPage.jsx";
-import LoginPage from "./routes/LoginPage.jsx";
-import HomePage, { loader as homePageLoader } from "./routes/HomePage.jsx";
-import PostPage, { loader as postLoader } from "./routes/PostPage.jsx";
+import Root from "./routes/Root/Root.jsx";
+import ErrorPage from "./routes/ErrorPage/ErrorPage.jsx";
+import LoginPage from "./routes/LoginPage/LoginPage.jsx";
+import HomePage, {
+  loader as homePageLoader,
+} from "./routes/HomePage/HomePage.jsx";
+import PostPage, { loader as postLoader } from "./routes/PostPage/PostPage.jsx";
 
 import "./index.css";
 

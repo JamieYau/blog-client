@@ -1,6 +1,6 @@
 import styles from "./Nav.module.css"
 import { Link } from "react-router-dom";
-import logo from "../assets/logo1lightcrop.png"
+import logo from "../../assets/logo1lightcrop.png"
 
 export default function Nav() {
   return (

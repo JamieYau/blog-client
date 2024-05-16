@@ -1,7 +1,7 @@
 import { useLoaderData } from "react-router-dom";
-import { getPosts } from "../api";
-import PostItem from "../components/PostItem";
-import styles from "../styles/HomePage.module.css";
+import { getPosts } from "../../api";
+import PostItem from "../../components/PostItem/PostItem";
+import styles from "./HomePage.module.css";
 
 export default function HomePage() {
   const posts = useLoaderData();
