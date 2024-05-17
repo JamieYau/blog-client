@@ -116,14 +116,24 @@ export async function getPostComments(postId) {
 }
 
 export async function login(username, password) {
-  const response = await fetch(`${BASE_URL}/auth/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ username, password }),
-  });
-  return response.json();
+  try {
+    const response = await fetch(`${BASE_URL}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    });
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Login failed");
+    }
+
+    return data; // Assuming the data contains { success: true, token }
+  } catch (error) {
+    throw new Error(error.message || "An error occurred");
+  }
 }
 
 export async function postComment(postId, comment) {
