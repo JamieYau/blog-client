@@ -1,5 +1,7 @@
 .nav {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 1rem 2rem;
   border-bottom: 1px solid #1f2937;
 }
@@ -9,5 +11,45 @@
 }
 
 .logo {
-  height: 30px;
+  height: 40px;
+}
+
+.rightSection {
+  display: flex;
+  align-items: center;
+}
+
+.loginLink {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 1rem;
+}
+
+.profileContainer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+}
+
+.profileIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--text-color);
+  color: var(--primary-color);
+}
+
+.userInitial {
+  font-weight: bold;
+  font-size: 1.5em;
+  height: 100%
+}
+
+.logoutText {
+  color: #fff;
+  font-size: 0.9rem;
 }

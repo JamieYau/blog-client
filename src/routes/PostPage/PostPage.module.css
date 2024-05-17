@@ -7,6 +7,9 @@
 }
 
 .commentSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   padding: 1rem;
   background-color: var(--primary-color);
   border: 1px solid var(--border-color);
@@ -15,5 +18,15 @@
 
 .commentHeader {
   font-size: 1.75rem;
-  margin-bottom: 1rem;
+}
+
+.login {
+  background-color: var(--accent-color);
+  padding: 0.6em 1.2em;
+  border-radius: 5px;
+}
+
+.login:hover {
+  background-image: linear-gradient(rgb(0 0 0/40%) 0 0);
+  color: inherit;
 }

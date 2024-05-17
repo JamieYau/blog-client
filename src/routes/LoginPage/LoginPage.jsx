@@ -11,8 +11,11 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       const response = await login(username, password);
-      localStorage.setItem("token", response.token);
-      navigate("/");
+      if (response.success) {
+        localStorage.setItem("token", response.token);
+        localStorage.setItem("user", JSON.stringify({ username }));
+        navigate("/");
+      }
     } catch (error) {
       console.error("Login failed", error);
     }

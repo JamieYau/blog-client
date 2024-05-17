@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLoaderData, redirect } from "react-router-dom";
+import { useLoaderData, redirect, Link } from "react-router-dom";
 import { getPost, getPostComments, postComment } from "../../api";
 import styles from "./PostPage.module.css";
 import PostDetails from "../../components/PostDetails/PostDetails";
@@ -30,17 +30,19 @@ export default function PostPage() {
       </section>
       <section className={styles.commentSection}>
         <h2 className={styles.commentHeader}>Comments</h2>
-        {token ? (
-          <CommentForm
-            newComment={newComment}
-            setNewComment={setNewComment}
-            handlePostComment={handlePostComment}
-          />
-        ) : (
-          <button onClick={() => redirect("/login")}>
-            Login to post a comment
-          </button>
-        )}
+        <div className={styles.commentFormContainer}>
+          {token ? (
+            <CommentForm
+              newComment={newComment}
+              setNewComment={setNewComment}
+              handlePostComment={handlePostComment}
+            />
+          ) : (
+            <Link to="/login" className={styles.login}>
+              Login to post a comment
+            </Link>
+          )}
+        </div>
         <CommentsList comments={comments} />
       </section>
     </div>
