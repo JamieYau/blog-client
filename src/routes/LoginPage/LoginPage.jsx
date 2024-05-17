@@ -1,22 +1,14 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { login } from "../../api";
+import { useAuth } from "../../contexts/AuthProvider";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      const response = await login(username, password);
-      localStorage.setItem("token", response.token);
-      localStorage.setItem("user", JSON.stringify({ username }));
-      navigate("/");
-    } catch (error) {
-      console.error("Login failed", error);
-    }
+    await login(username, password);
   };
 
   return (
