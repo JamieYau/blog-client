@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLoaderData, redirect, Link } from "react-router-dom";
-import { getPost, getPostComments, postComment } from "../../api";
+import { postComment } from "../../api";
 import styles from "./PostPage.module.css";
 import PostDetails from "../../components/PostDetails/PostDetails";
 import CommentsList from "../../components/CommentsList/CommentsList";
@@ -47,11 +47,4 @@ export default function PostPage() {
       </section>
     </div>
   );
-}
-
-// loader function
-export async function loader({ params }) {
-  const post = await getPost(params.postId); // Fetch posts data from your API
-  const comments = await getPostComments(params.postId);
-  return { post, comments };
 }

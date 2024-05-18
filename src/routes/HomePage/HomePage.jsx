@@ -1,5 +1,4 @@
 import { useLoaderData } from "react-router-dom";
-import { getPosts } from "../../api";
 import PostItem from "../../components/PostItem/PostItem";
 import styles from "./HomePage.module.css";
 
@@ -16,10 +15,4 @@ export default function HomePage() {
       </ul>
     </div>
   );
-}
-
-// loader function
-export async function loader() {
-  const posts = await getPosts(); // Fetch posts data from your API
-  return posts;
 }
