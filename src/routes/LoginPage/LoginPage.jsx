@@ -24,18 +24,24 @@ export default function LoginPage() {
         <h2 className={styles.loginTitle}>Login</h2>
         <form onSubmit={handleLogin} className={styles.loginForm}>
           <div className={styles.formField}>
-            <label>Username:</label>
+            <label htmlFor={styles["username"]}>Username:</label>
             <input
+              id={styles["username"]}
               type="text"
               value={username}
+              required
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           <div className={styles.formField}>
-            <label>Password:</label>
+            <label htmlFor={styles["password"]}>Password:</label>
             <input
+              id={styles["password"]}
               type="password"
               value={password}
+              required
+              minLength={8}
+              maxLength={32}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
