@@ -58,7 +58,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--accent-color);
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -69,4 +69,20 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+input,
+textarea {
+  color: var(--text-color);
+  font-family: inherit;
+  font-size: 0.9em;
+  background-color: var(--tertiary-color);
+  border: 1px solid #6b7280;
+  border-radius: 4px;
+}
+
+input:focus,
+textarea:focus {
+  outline: 2px solid var(--accent-color);
+  border-color: transparent;
 }

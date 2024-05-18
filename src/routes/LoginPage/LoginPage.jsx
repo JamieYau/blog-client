@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthProvider";
+import styles from "./LoginPage.module.css";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -12,24 +13,29 @@ export default function LoginPage() {
   };
 
   return (
-    <form onSubmit={handleLogin}>
-      <div>
-        <label>Username:</label>
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+    <div className={styles.loginPage}>
+      <div className={styles.loginContainer}>
+        <h2 className={styles.loginTitle}>Login</h2>
+        <form onSubmit={handleLogin} className={styles.loginForm}>
+          <div className={styles.formField}>
+            <label>Username:</label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          <div className={styles.formField}>
+            <label>Password:</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <button className={styles.loginButton} type="submit">Login</button>
+        </form>
       </div>
-      <div>
-        <label>Password:</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <button type="submit">Login</button>
-    </form>
+    </div>
   );
 }
