@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAuth } from "../../contexts/AuthProvider";
+import useAuth from "../../contexts/useAuth";
 import styles from "./LoginPage.module.css";
 
 export default function LoginPage() {

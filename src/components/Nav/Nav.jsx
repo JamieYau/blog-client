@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useAuth } from "../../contexts/AuthProvider";
+import useAuth from "../../contexts/useAuth";
 import styles from "./Nav.module.css";
 import logo from "../../assets/logo1lightcrop.png";
 
