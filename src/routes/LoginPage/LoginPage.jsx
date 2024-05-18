@@ -5,11 +5,17 @@ import styles from "./LoginPage.module.css";
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const { login } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    await login(username, password);
+    setError(""); // Clear any previous errors
+    try {
+      await login(username, password);
+    } catch (error) {
+      setError(error.message); // Set the error message
+    }
   };
 
   return (
@@ -33,7 +39,10 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button className={styles.loginButton} type="submit">Login</button>
+          {error && <p className={styles.error}>{error}</p>}
+          <button className={styles.loginButton} type="submit">
+            Login
+          </button>
         </form>
       </div>
     </div>

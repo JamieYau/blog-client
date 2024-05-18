@@ -20,7 +20,7 @@
 
 .postContent {
   background-color: var(--primary-color);
-  padding: 1rem;
+  padding: 1rem 2rem;
   border: 1px solid var(--border-color);
   border-radius: 5px;
 }

@@ -34,6 +34,13 @@
   flex-direction: column;
 }
 
+.error {
+  width: 100%;
+  color: #cb6a6a;
+  font-size: 0.8em;
+  font-weight: 500;
+}
+
 .loginButton {
   width: fit-content;
 }
