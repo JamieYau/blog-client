@@ -20,8 +20,14 @@
 }
 
 .loginLink {
-  color: #fff;
-  text-decoration: none;
+  background-color: var(--accent-color);
+  padding: 0.6em 1.2em;
+  border-radius: 5px;
+}
+
+.loginLink:hover {
+  background-image: linear-gradient(rgb(0 0 0/40%) 0 0);
+  color: inherit;
 }
 
 .profileContainer {
@@ -45,7 +51,7 @@
 .userInitial {
   font-weight: bold;
   font-size: 1.5em;
-  height: 100%
+  height: 100%;
 }
 
 .logoutText {

@@ -7,7 +7,7 @@
   --primary-color: #1f2937;
   --secondary-color: #37415180;
   --tertiary-color: #2b3544;
-  --accent-color: #00c96d;
+  --accent-color: #00af60;
   --border-color: #363f4b;
   --text-color: #e5e7eb;
   --text-secondary-color: #9ca3af;
@@ -35,6 +35,7 @@ a {
 
 a:visited {
   color: inherit;
+  text-decoration: none;
 }
 
 a:hover {
