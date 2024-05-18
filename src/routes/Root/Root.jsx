@@ -1,4 +1,5 @@
 import Nav from "../../components/Nav/Nav";
+import Footer from "../../components/Footer/Footer";
 import { Outlet } from "react-router-dom";
 import "./Root.css";
 
@@ -12,6 +13,7 @@ export default function Root() {
         <main>
           <Outlet />
         </main>
+        <Footer />
       </AuthProvider>
     </>
   );
