@@ -15,9 +15,13 @@ export default function Nav() {
       </Link>
       <div className={styles.rightSection}>
         {isLoggedIn ? (
-          <div className={styles.profileContainer} onClick={logout}>
-            <div className={styles.profileIcon}>{userInitial}</div>
-            <span className={styles.logoutText}>Logout</span>
+          <div className={styles.profileContainer}>
+            <div className={styles.profileIcon}>
+              <span className={styles.userInitial}>{userInitial}</span>
+            </div>
+            <span className={styles.logoutText} onClick={logout}>
+              Logout
+            </span>
           </div>
         ) : (
           <Link to="/login" className={styles.loginLink}>
