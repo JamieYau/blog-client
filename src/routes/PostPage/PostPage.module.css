@@ -1,5 +1,5 @@
 .postPage {
-  padding: 2rem;
+  padding: 2rem 4rem;
 }
 
 .postSection {
@@ -21,6 +21,7 @@
 }
 
 .login {
+  width: fit-content;
   background-color: var(--accent-color);
   padding: 0.6em 1.2em;
   border-radius: 5px;

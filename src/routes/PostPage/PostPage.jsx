@@ -30,7 +30,7 @@ export default function PostPage() {
       </section>
       <section className={styles.commentSection}>
         <h2 className={styles.commentHeader}>Comments</h2>
-        <div className={styles.commentFormContainer}>
+
           {token ? (
             <CommentForm
               newComment={newComment}
@@ -42,7 +42,7 @@ export default function PostPage() {
               Login to post a comment
             </Link>
           )}
-        </div>
+   
         <CommentsList comments={comments} />
       </section>
     </div>

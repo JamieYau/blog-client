@@ -6,6 +6,7 @@
   --background-color: #111827;
   --primary-color: #1f2937;
   --secondary-color: #37415180;
+  --tertiary-color: #2b3544;
   --accent-color: #00c96d;
   --border-color: #363f4b;
   --text-color: #e5e7eb;
@@ -37,7 +38,7 @@ a:visited {
 }
 
 a:hover {
-  color: #00c96d;
+  color: var(--accent-color);
 }
 
 h1 {
@@ -61,7 +62,8 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  background-image: linear-gradient(rgb(0 0 0/40%) 0 0);
+  color: inherit;
 }
 button:focus,
 button:focus-visible {
