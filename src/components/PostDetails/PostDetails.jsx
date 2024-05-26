@@ -11,9 +11,10 @@ export default function PostDetails({ post }) {
           {new Date(post.createdAt).toLocaleDateString()}
         </p>
       </div>
-      <div className={styles.postContent}>
-        <p>{post.content}</p>
-      </div>
+      <div
+        className={styles.postContent}
+        dangerouslySetInnerHTML={{ __html: post.content }}
+      ></div>
     </>
   );
 }

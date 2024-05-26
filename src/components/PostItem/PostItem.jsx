@@ -2,12 +2,18 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import styles from "./PostItem.module.css";
 
+// Utility function to strip HTML tags and extract text content
+const stripHtmlTags = (html) => {
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  return doc.body.textContent || "";
+};
+
 export default function PostItem({ post }) {
   const formattedDate = new Date(post.createdAt).toLocaleDateString();
   const truncatedContent =
-    post.content.length > 100
-      ? post.content.substring(0, 100) + "..."
-      : post.content;
+    stripHtmlTags(post.content).length > 100
+      ? stripHtmlTags(post.content).substring(0, 100) + "..."
+      : stripHtmlTags(post.content);
 
   return (
     <li className={styles.postItem}>
