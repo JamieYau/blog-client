@@ -1,7 +1,26 @@
 const BASE_URL = import.meta.env.VITE_API_URL;
 
+//helper function to format comments and projects with author
+export async function formatWithAuthor(item) {
+  try {
+    const authorResponse = await fetch(`${BASE_URL}/users/${item.authorId}`);
+    const authorData = await authorResponse.json();
+
+    if (!authorData.success) {
+      throw new Error("Failed to fetch author details: " + authorData.errors);
+    }
+
+    return {
+      ...item,
+      author: authorData.data.username,
+    };
+  } catch (error) {
+    console.error("Error fetching author details:", error);
+    throw error;
+  }
+}
+
 export async function getPosts() {
-  let posts;
   // Fetch the list of blog posts from your API
   try {
     const response = await fetch(`${BASE_URL}/posts`);
@@ -9,34 +28,15 @@ export async function getPosts() {
     if (!postsData.success) {
       throw new Error("Failed to fetch post: " + postsData.errors);
     }
-    posts = postsData.data;
-
     // Fetch the author's name for each post
     const postsWithAuthors = await Promise.all(
-      posts.map(async (post) => {
-        const authorResponse = await fetch(
-          `${BASE_URL}/users/${post.authorId}`
-        );
-        const authorData = await authorResponse.json();
-
-        if (!authorData.success) {
-          throw new Error(
-            "Failed to fetch author details for post: " + authorData.errors
-          );
-        }
-
-        return {
-          ...post,
-          author: authorData.data.username,
-        };
-      })
+      postsData.data.map(formatWithAuthor)
     );
-    posts = postsWithAuthors;
+    return postsWithAuthors;
   } catch (error) {
     console.error("Error fetching posts:", error);
     return null;
   }
-  return posts;
 }
 
 // Function to fetch a single post by its postId
@@ -49,35 +49,19 @@ export async function getPost(postId) {
     if (!postData.success) {
       throw new Error("Failed to fetch post: " + postData.errors);
     }
+    // Use formatWithAuthor to fetch the author's name
+    const postWithAuthor = await formatWithAuthor(postData.data);
 
-    const post = postData.data;
-
-    // Fetch the author's name for the post
-    const authorResponse = await fetch(`${BASE_URL}/users/${post.authorId}`);
-    const authorData = await authorResponse.json();
-
-    if (!authorData.success) {
-      throw new Error(
-        "Failed to fetch author details for post: " + authorData.errors
-      );
-    }
-
-    const authorName = authorData.data.username;
-
-    // Add the author's name to the post data
-    return {
-      ...post,
-      author: authorName,
-    };
+    return postWithAuthor;
   } catch (error) {
     console.error("Error fetching post:", error);
     throw error; // Re-throw the error for the caller to handle
   }
 }
 
+
 // Function to get all comments for a post
 export async function getPostComments(postId) {
-  let comments;
   // Fetch the list of blog comments from your API
   try {
     const response = await fetch(`${BASE_URL}/posts/${postId}/comments`);
@@ -85,34 +69,15 @@ export async function getPostComments(postId) {
     if (!commentsData.success) {
       throw new Error("Failed to fetch comments: " + commentsData.errors);
     }
-    comments = commentsData.data;
-
     // Fetch the author's name for each comment
     const commentsWithAuthors = await Promise.all(
-      comments.map(async (comment) => {
-        const authorResponse = await fetch(
-          `${BASE_URL}/users/${comment.authorId}`
-        );
-        const authorData = await authorResponse.json();
-
-        if (!authorData.success) {
-          throw new Error(
-            "Failed to fetch author details for post: " + authorData.errors
-          );
-        }
-
-        return {
-          ...comment,
-          author: authorData.data.username,
-        };
-      })
+      commentsData.data.map(formatWithAuthor)
     );
-    comments = commentsWithAuthors;
+    return commentsWithAuthors;
   } catch (error) {
     console.error("Error fetching comments:", error);
     return null;
   }
-  return comments;
 }
 
 export async function login(username, password) {
