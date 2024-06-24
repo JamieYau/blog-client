@@ -87,6 +87,7 @@ export async function login(username, password) {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify({ username, password }),
     });
     const data = await response.json();
@@ -95,19 +96,39 @@ export async function login(username, password) {
       throw new Error(data.message || "Login failed");
     }
 
-    return data; // Assuming the data contains { success: true, token }
+    return data;
+  } catch (error) {
+    throw new Error(error.message || "An error occurred");
+  }
+}
+
+export async function refreshToken() {
+  try {
+    const response = await fetch(`${BASE_URL}/auth/refresh-token`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Can't refresh Token");
+    }
+    return data;
   } catch (error) {
     throw new Error(error.message || "An error occurred");
   }
 }
 
 export async function postComment(postId, comment) {
-  const token = localStorage.getItem("token");
+  const accessToken = localStorage.getItem("accessToken");
   const response = await fetch(`${BASE_URL}/posts/${postId}/comments`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify(comment),
   });
