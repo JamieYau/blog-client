@@ -1,10 +1,10 @@
+import { Outlet } from "react-router-dom";
 import Nav from "../../components/Nav/Nav";
 import Footer from "../../components/Footer/Footer";
-import { Outlet } from "react-router-dom";
-import "./Root.css";
 
 import AuthProvider from "../../contexts/AuthProvider";
 
+// Define a functional component called Root
 export default function Root() {
   return (
     <>

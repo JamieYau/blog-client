@@ -1,7 +1,11 @@
-import PropTypes from "prop-types";
+import { Post } from "../../types/models";
 import styles from "./PostDetails.module.css";
 
-export default function PostDetails({ post }) {
+interface postProps {
+  post: Post;
+}
+
+export default function PostDetails({ post }: postProps) {
   return (
     <>
       <h2 className={styles.postTitle}>{post.title}</h2>
@@ -18,12 +22,3 @@ export default function PostDetails({ post }) {
     </>
   );
 }
-
-PostDetails.propTypes = {
-  post: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
-    createdAt: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-  }).isRequired,
-};

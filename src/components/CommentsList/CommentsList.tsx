@@ -1,7 +1,11 @@
-import PropTypes from "prop-types";
+import { Comment } from "../../types/models";
 import styles from "./CommentsList.module.css";
 
-export default function CommentsList({ comments }) {
+interface commentListProps {
+  comments: Comment[];
+}
+
+export default function CommentsList({ comments }: commentListProps) {
   return (
     <ul className={styles.comments}>
       {comments.map((comment) => (
@@ -16,14 +20,3 @@ export default function CommentsList({ comments }) {
     </ul>
   );
 }
-
-CommentsList.propTypes = {
-  comments: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      author: PropTypes.string.isRequired,
-      createdAt: PropTypes.string.isRequired,
-      content: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-};

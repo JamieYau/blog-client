@@ -1,7 +1,15 @@
 const BASE_URL = import.meta.env.VITE_API_URL;
+import { ApiResponse, LoginResponse, RefreshTokenResponse } from "./types/api";
+import { Post, Comment } from "./types/models";
+
+function isPost(item: Post | Comment): item is Post {
+  return (item as Post).title !== undefined;
+}
 
 //helper function to format comments and projects with author
-export async function formatWithAuthor(item) {
+export async function formatWithAuthor(
+  item: Post | Comment
+): Promise<Post | Comment> {
   try {
     const authorResponse = await fetch(`${BASE_URL}/users/${item.authorId}`);
     const authorData = await authorResponse.json();
@@ -10,21 +18,28 @@ export async function formatWithAuthor(item) {
       throw new Error("Failed to fetch author details: " + authorData.errors);
     }
 
-    return {
-      ...item,
-      author: authorData.data.username,
-    };
+    if (isPost(item)) {
+      return {
+        ...item,
+        author: authorData.data.username,
+      } as Post;
+    } else {
+      return {
+        ...item,
+        author: authorData.data.username,
+      } as Comment;
+    }
   } catch (error) {
     console.error("Error fetching author details:", error);
     throw error;
   }
 }
 
-export async function getPosts() {
+export async function getPosts(): Promise<Post[]> {
   // Fetch the list of blog posts from your API
   try {
     const response = await fetch(`${BASE_URL}/posts`);
-    const postsData = await response.json();
+    const postsData: ApiResponse<Post[]> = await response.json();
     if (!postsData.success) {
       throw new Error("Failed to fetch post: " + postsData.errors);
     }
@@ -32,19 +47,19 @@ export async function getPosts() {
     const postsWithAuthors = await Promise.all(
       postsData.data.map(formatWithAuthor)
     );
-    return postsWithAuthors;
+    return postsWithAuthors as Post[];
   } catch (error) {
     console.error("Error fetching posts:", error);
-    return null;
+    throw error;
   }
 }
 
 // Function to fetch a single post by its postId
-export async function getPost(postId) {
+export async function getPost(postId: string): Promise<Post> {
   try {
     // Fetch the post data from your API
     const response = await fetch(`${BASE_URL}/posts/${postId}`);
-    const postData = await response.json();
+    const postData: ApiResponse<Post> = await response.json();
 
     if (!postData.success) {
       throw new Error("Failed to fetch post: " + postData.errors);
@@ -52,20 +67,21 @@ export async function getPost(postId) {
     // Use formatWithAuthor to fetch the author's name
     const postWithAuthor = await formatWithAuthor(postData.data);
 
-    return postWithAuthor;
+    return postWithAuthor as Post;
   } catch (error) {
     console.error("Error fetching post:", error);
     throw error; // Re-throw the error for the caller to handle
   }
 }
 
-
 // Function to get all comments for a post
-export async function getPostComments(postId) {
+export async function getPostComments(
+  postId: string
+): Promise<Comment[] | null> {
   // Fetch the list of blog comments from your API
   try {
     const response = await fetch(`${BASE_URL}/posts/${postId}/comments`);
-    const commentsData = await response.json();
+    const commentsData: ApiResponse<Comment[]> = await response.json();
     if (!commentsData.success) {
       throw new Error("Failed to fetch comments: " + commentsData.errors);
     }
@@ -73,14 +89,17 @@ export async function getPostComments(postId) {
     const commentsWithAuthors = await Promise.all(
       commentsData.data.map(formatWithAuthor)
     );
-    return commentsWithAuthors;
+    return commentsWithAuthors as Comment[];
   } catch (error) {
     console.error("Error fetching comments:", error);
     return null;
   }
 }
 
-export async function login(username, password) {
+export async function login(
+  username: string,
+  password: string
+): Promise<LoginResponse> {
   try {
     const response = await fetch(`${BASE_URL}/auth/login`, {
       method: "POST",
@@ -90,7 +109,7 @@ export async function login(username, password) {
       credentials: "include",
       body: JSON.stringify({ username, password }),
     });
-    const data = await response.json();
+    const data: LoginResponse = await response.json();
 
     if (!response.ok) {
       throw new Error(data.message || "Login failed");
@@ -98,11 +117,11 @@ export async function login(username, password) {
 
     return data;
   } catch (error) {
-    throw new Error(error.message || "An error occurred");
+    throw new Error((error as Error).message || "An error occurred");
   }
 }
 
-export async function refreshToken() {
+export async function refreshToken(): Promise<RefreshTokenResponse> {
   try {
     const response = await fetch(`${BASE_URL}/auth/refresh-token`, {
       method: "POST",
@@ -111,18 +130,21 @@ export async function refreshToken() {
       },
       credentials: "include",
     });
-    const data = await response.json();
+    const data: RefreshTokenResponse = await response.json();
 
     if (!response.ok) {
       throw new Error(data.message || "Can't refresh Token");
     }
     return data;
   } catch (error) {
-    throw new Error(error.message || "An error occurred");
+    throw new Error((error as Error).message || "An error occurred");
   }
 }
 
-export async function postComment(postId, comment) {
+export async function postComment(
+  postId: string,
+  comment: Partial<Comment>
+): Promise<Comment> {
   const accessToken = localStorage.getItem("accessToken");
   const response = await fetch(`${BASE_URL}/posts/${postId}/comments`, {
     method: "POST",
@@ -132,5 +154,6 @@ export async function postComment(postId, comment) {
     },
     body: JSON.stringify(comment),
   });
-  return response.json();
+  const data: ApiResponse<Comment> = await response.json();
+  return data.data;
 }

@@ -1,11 +1,16 @@
-import PropTypes from "prop-types";
 import styles from "./CommentForm.module.css";
+
+interface CommentFormProps {
+  newComment: string;
+  setNewComment: React.Dispatch<React.SetStateAction<string>>;
+  handlePostComment: (e: React.FormEvent<HTMLFormElement>) => void;
+}
 
 export default function CommentForm({
   newComment,
   setNewComment,
   handlePostComment,
-}) {
+}: CommentFormProps) {
   return (
     <form onSubmit={handlePostComment} className={styles.commentForm}>
       <textarea
@@ -21,9 +26,3 @@ export default function CommentForm({
     </form>
   );
 }
-
-CommentForm.propTypes = {
-  newComment: PropTypes.string.isRequired,
-  setNewComment: PropTypes.func.isRequired,
-  handlePostComment: PropTypes.func.isRequired,
-};

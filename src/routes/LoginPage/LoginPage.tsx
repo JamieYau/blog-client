@@ -8,13 +8,13 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const { login } = useAuth();
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(""); // Clear any previous errors
     try {
       await login(username, password);
     } catch (error) {
-      setError(error.message); // Set the error message
+      setError((error as Error).message); // Set the error message
     }
   };
 

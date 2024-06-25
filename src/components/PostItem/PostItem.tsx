@@ -1,14 +1,18 @@
-import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { Post } from "../../types/models";
 import styles from "./PostItem.module.css";
 
+interface PostItemProps {
+  post: Post;
+}
+
 // Utility function to strip HTML tags and extract text content
-const stripHtmlTags = (html) => {
+const stripHtmlTags = (html: string) => {
   const doc = new DOMParser().parseFromString(html, "text/html");
   return doc.body.textContent || "";
 };
 
-export default function PostItem({ post }) {
+export default function PostItem({ post }: PostItemProps) {
   const formattedDate = new Date(post.createdAt).toLocaleDateString();
   const truncatedContent =
     stripHtmlTags(post.content).length > 100
@@ -29,14 +33,3 @@ export default function PostItem({ post }) {
     </li>
   );
 }
-
-// Prop types validation
-PostItem.propTypes = {
-  post: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
-    createdAt: PropTypes.string.isRequired,
-  }).isRequired,
-};

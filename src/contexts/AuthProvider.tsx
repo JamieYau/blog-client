@@ -1,26 +1,26 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
 import { jwtDecode } from "jwt-decode";
 import { login as apiLogin, refreshToken as apiRefreshToken } from "../api";
+import { AuthContextType, AuthProviderProps } from "../types/auth";
 
-export const AuthContext = createContext();
+export const AuthContext = createContext<AuthContextType | undefined>(
+  undefined
+);
 
-const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("user")) || null
+export default function AuthProvider({ children }: AuthProviderProps) {
+  const [user, setUser] = useState<{ username: string; } | null>(
+    JSON.parse(localStorage.getItem("user") as string) || null
   );
-  const [accessToken, setAccessToken] = useState(
+  const [accessToken, setAccessToken] = useState<string>(
     localStorage.getItem("accessToken") || ""
   );
   const navigate = useNavigate();
 
-  // Function to check accessToken expiration and refresh it if necessary
-  const checkTokenExpiration = async () => {
+  const checkTokenExpiration = useCallback(async () => {
     if (accessToken) {
-      const decodedToken = jwtDecode(accessToken);
+      const decodedToken: { exp: number; } = jwtDecode(accessToken);
       const currentTime = Date.now() / 1000;
-      // If the accessToken has expired
       if (decodedToken.exp < currentTime) {
         try {
           const response = await apiRefreshToken();
@@ -28,22 +28,21 @@ const AuthProvider = ({ children }) => {
           localStorage.setItem("accessToken", response.accessToken);
         } catch (error) {
           console.error("Failed to refresh accessToken", error);
-          alert("session timed out");
+          alert("Session timed out");
           logout();
         }
       }
     }
-  };
-
-  useEffect(() => {
-    // Set an interval to check token expiration periodically
-    const interval = setInterval(checkTokenExpiration, 5 * 60 * 1000); // Check every 5 minutes
-    return () => clearInterval(interval);
   }, [accessToken]);
 
-  const login = async (username, password) => {
+  useEffect(() => {
+    const interval = setInterval(checkTokenExpiration, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, [checkTokenExpiration]);
+
+  const login = async (username: string, password: string) => {
     try {
-      const response = await apiLogin(username, password); // Use the login function from api.js
+      const response = await apiLogin(username, password);
       setUser({ username });
       setAccessToken(response.accessToken);
       localStorage.setItem("user", JSON.stringify({ username }));
@@ -72,10 +71,4 @@ const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-};
-
-AuthProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-export default AuthProvider;
+}
