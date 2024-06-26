@@ -1,5 +1,4 @@
 import { Post } from "../../types/models";
-import styles from "./PostDetails.module.css";
 
 interface postProps {
   post: Post;
@@ -8,15 +7,15 @@ interface postProps {
 export default function PostDetails({ post }: postProps) {
   return (
     <>
-      <h2 className={styles.postTitle}>{post.title}</h2>
-      <div className={styles.postDetails}>
-        <p className={styles.postAuthor}>{post.author}</p>
-        <p className={styles.postCreatedAt}>
+      <h2 className="text-5xl">{post.title}</h2>
+      <div className="flex font-medium text-muted-foreground mb-4">
+        <p className="pr-4 border-r">{post.author}</p>
+        <p className="pl-4">
           {new Date(post.createdAt).toLocaleDateString()}
         </p>
       </div>
       <div
-        className={styles.postContent}
+        className="bg-secondary px-8 py-4 border rounded-md"
         dangerouslySetInnerHTML={{ __html: post.content }}
       ></div>
     </>

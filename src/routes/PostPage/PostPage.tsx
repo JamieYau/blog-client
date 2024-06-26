@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useLoaderData, redirect, Link } from "react-router-dom";
 import { postComment, formatWithAuthor } from "../../api";
-import styles from "./PostPage.module.css";
 import PostDetails from "../../components/PostDetails/PostDetails";
 import CommentsList from "../../components/CommentsList/CommentsList";
 import CommentForm from "../../components/CommentForm/CommentForm";
