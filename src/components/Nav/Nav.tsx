@@ -10,30 +10,35 @@ export default function Nav() {
   const userInitial = isLoggedIn ? user.username.charAt(0).toUpperCase() : "";
 
   return (
-    <nav className="flex items-center justify-between px-16 py-4 shadow-sm">
-      <Link to="/" className="flex">
-        <img className="h-10" src={logo} alt="<DevBlog/>" />
-      </Link>
-      <div className="flex items-center">
-        {isLoggedIn ? (
-          <div className="flex cursor-pointer items-center gap-4">
-            <Avatar>
-              <AvatarImage />
-              <AvatarFallback>{userInitial}</AvatarFallback>
-            </Avatar>
-            <span
+    <header className="flex w-full justify-center shadow-sm">
+      <nav className="m-auto flex w-full items-center justify-between p-4 sm:px-8">
+        <Link to="/" className="flex">
+          <img className="h-10 object-contain" src={logo} alt="<DevBlog/>" />
+        </Link>
+        <div className="flex items-center">
+          {isLoggedIn ? (
+            <div className="flex cursor-pointer items-center gap-4">
+              <Avatar>
+                <AvatarImage />
+                <AvatarFallback>{userInitial}</AvatarFallback>
+              </Avatar>
+              <span
+                className={buttonVariants({ variant: "default" })}
+                onClick={logout}
+              >
+                Logout
+              </span>
+            </div>
+          ) : (
+            <Link
+              to="/login"
               className={buttonVariants({ variant: "default" })}
-              onClick={logout}
             >
-              Logout
-            </span>
-          </div>
-        ) : (
-          <Link to="/login" className={buttonVariants({ variant: "default" })}>
-            Login
-          </Link>
-        )}
-      </div>
-    </nav>
+              Login
+            </Link>
+          )}
+        </div>
+      </nav>
+    </header>
   );
 }

@@ -10,7 +10,7 @@ export default function HomePage() {
   }
   return (
     <section className="flex flex-col">
-      <h2 className="mb-4 text-4xl">Blog Posts</h2>
+      <h1 className="mb-4 text-4xl">Blog Posts</h1>
       <ul className="flex flex-col gap-4">
         {posts.map((post: Post) => (
           <PostItem key={post._id} post={post} />

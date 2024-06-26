@@ -7,7 +7,7 @@ interface postProps {
 export default function PostDetails({ post }: postProps) {
   return (
     <>
-      <h2 className="text-5xl">{post.title}</h2>
+      <h1 className="text-5xl">{post.title}</h1>
       <div className="flex font-medium text-muted-foreground mb-4">
         <p className="pr-4 border-r">{post.author}</p>
         <p className="pl-4">
