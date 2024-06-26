@@ -20,18 +20,20 @@ export default function PostItem({ post }: PostItemProps) {
           src={post.coverImageUrl || placeholder}
           className="aspect-[4/3] w-full max-w-lg object-cover"
         />
-        <div className="flex min-h-full w-full flex-col">
-          <h2 className="mb-2 text-2xl font-bold">{post.title}</h2>
+        <div className="flex min-h-full w-full flex-col text-muted-foreground">
+          <h2 className="mb-2 text-2xl font-bold text-foreground">
+            {post.title}
+          </h2>
           <p className="color-muted-foreground mb-1 text-sm">{formattedDate}</p>
           <span className="mb-4 space-x-2">
             {post.tags.map((tag) => (
               <Badge key={tag}>{tag}</Badge>
             ))}
           </span>
-          <p className="mb-1 line-clamp-4 flex-1 tracking-tight">
+          <p className="mb-1 line-clamp-4 tracking-tight">
             {stripHtmlTags(post.content)}
           </p>
-          <p className="w-full text-end font-medium leading-none">
+          <p className="flex w-full flex-1 items-end justify-end font-medium leading-none gap-1">
             <span>by </span>
             {post.author}
           </p>

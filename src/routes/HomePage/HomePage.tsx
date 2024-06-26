@@ -11,7 +11,7 @@ export default function HomePage() {
   posts.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
   return (
     <section className="flex flex-col">
-      <h1 className="mb-4 text-4xl">Blog Posts</h1>
+      <h1 className="mb-10 text-4xl w-full text-center font-semibold pb-8 border-b">Blog Posts</h1>
       <ul className="flex flex-col gap-4">
         {posts.map((post: Post) => (
           <PostItem key={post._id} post={post} />
