@@ -5,6 +5,8 @@ import Prism from "prismjs";
 import { AiOutlineLike } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import { toggleLike } from "@/api";
+import { cn } from "@/lib/utils";
+import useAuth from "@/contexts/useAuth";
 
 interface postProps {
   post: Post;
@@ -12,12 +14,17 @@ interface postProps {
 }
 
 export default function PostDetails({ post, commentCount }: postProps) {
+  const { user } = useAuth();
   const [likes, setLikes] = useState(post.likes.length);
+  const [userLiked, setUserLiked] = useState(
+    user ? post.likes.includes(user.userId) : false,
+  ); // Check if user has liked
 
   const handleToggleLike = async () => {
     try {
       const updatedPost = await toggleLike(post._id);
       setLikes(updatedPost.likes.length);
+      setUserLiked(user ? updatedPost.likes.includes(user.userId) : false); // Update user like status
     } catch (error) {
       console.error("Error toggling like:", error);
     }
@@ -36,10 +43,14 @@ export default function PostDetails({ post, commentCount }: postProps) {
         <p className="pl-4">{new Date(post.createdAt).toLocaleDateString()}</p>
       </div>
       <div className="flex w-full justify-between border-y p-4">
-        <div className="flex gap-8 text-muted-foreground">
-          <span className="flex items-center gap-1 leading-none">
+        <div className="flex select-none gap-8 text-muted-foreground">
+          <span
+            className={cn("flex items-center gap-1 leading-none", {
+              "font-medium text-foreground": userLiked,
+            })}
+          >
             <AiOutlineLike
-              className="h-5 w-5 cursor-pointer hover:text-foreground"
+              className="h-5 w-5 cursor-pointer"
               onClick={handleToggleLike}
             />
             <span className="cursor-default hover:text-foreground">

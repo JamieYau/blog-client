@@ -1,5 +1,5 @@
 export interface AuthContextType {
-  user: { username: string } | null;
+  user: { username: string; userId: string } | null;
   accessToken: string;
   login: (username: string, password: string) => Promise<void>;
   logout: () => void;
