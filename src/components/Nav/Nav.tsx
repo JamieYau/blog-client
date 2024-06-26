@@ -19,7 +19,7 @@ export default function Nav() {
             alt="<DevBlog/>"
             className="hidden h-10 sm:block"
           />
-          <img src={logo} alt="</>" className="sm:hidden h-10"/>
+          <img src={logo} alt="</>" className="h-10 sm:hidden" />
         </Link>
         <div className="flex items-center">
           {isLoggedIn ? (

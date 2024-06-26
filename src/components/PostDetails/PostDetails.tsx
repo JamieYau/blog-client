@@ -1,6 +1,8 @@
 import { Post } from "../../types/models";
 import { FaRegComment } from "react-icons/fa";
 import { Badge } from "../ui/badge";
+import Prism from "prismjs";
+import { useEffect } from "react";
 
 interface postProps {
   post: Post;
@@ -8,6 +10,10 @@ interface postProps {
 }
 
 export default function PostDetails({ post, commentCount }: postProps) {
+   useEffect(() => {
+     Prism.highlightAll();
+   }, [post.content]);
+
   return (
     <>
     <img src={post.coverImageUrl} alt="" />
@@ -28,7 +34,7 @@ export default function PostDetails({ post, commentCount }: postProps) {
         </span>
       </div>
       <div
-        className="mt-8 text-lg tracking-tight"
+        className="post-content mt-8 text-lg tracking-tight"
         dangerouslySetInnerHTML={{ __html: post.content }}
       ></div>
     </>
