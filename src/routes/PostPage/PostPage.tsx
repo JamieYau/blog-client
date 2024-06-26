@@ -6,6 +6,7 @@ import CommentsList from "../../components/CommentsList/CommentsList";
 import CommentForm from "../../components/CommentForm/CommentForm";
 import { Comment, Post } from "../../types/models";
 import { buttonVariants } from "@/components/ui/button";
+import useAuth from "@/contexts/useAuth";
 
 interface PostPageLoaderData {
   post: Post;
@@ -18,12 +19,14 @@ export default function PostPage() {
   const [comments, setComments] = useState<Comment[]>(initialComments);
   const [newComment, setNewComment] = useState<string>("");
   const accessToken = localStorage.getItem("accessToken");
+  const { checkTokenExpiration } = useAuth();
 
   const handlePostComment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!accessToken) {
       return redirect("/login");
     }
+    await checkTokenExpiration();
     try {
       const comment = await postComment(post._id, { content: newComment });
       const formattedComment = (await formatWithAuthor(comment)) as Comment;

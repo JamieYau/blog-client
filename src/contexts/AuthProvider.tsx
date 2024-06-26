@@ -5,21 +5,21 @@ import { login as apiLogin, refreshToken as apiRefreshToken } from "../api";
 import { AuthContextType, AuthProviderProps } from "../types/auth";
 
 export const AuthContext = createContext<AuthContextType | undefined>(
-  undefined
+  undefined,
 );
 
 export default function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<{ username: string; } | null>(
-    JSON.parse(localStorage.getItem("user") as string) || null
+  const [user, setUser] = useState<{ username: string } | null>(
+    JSON.parse(localStorage.getItem("user") as string) || null,
   );
   const [accessToken, setAccessToken] = useState<string>(
-    localStorage.getItem("accessToken") || ""
+    localStorage.getItem("accessToken") || "",
   );
   const navigate = useNavigate();
 
   const checkTokenExpiration = useCallback(async () => {
     if (accessToken) {
-      const decodedToken: { exp: number; } = jwtDecode(accessToken);
+      const decodedToken: { exp: number } = jwtDecode(accessToken);
       const currentTime = Date.now() / 1000;
       if (decodedToken.exp < currentTime) {
         try {
@@ -67,7 +67,9 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, accessToken, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, accessToken, login, logout, checkTokenExpiration }}
+    >
       {children}
     </AuthContext.Provider>
   );
