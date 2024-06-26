@@ -39,8 +39,8 @@ export default function PostPage() {
       <section className="mb-8">
         <PostDetails post={post} />
       </section>
-      <section className="flex flex-col gap-4 rounded-md border-border bg-secondary px-8 py-4 items-center">
-        <h2 className="text-2xl w-full">Comments</h2>
+      <section className="flex flex-col gap-4 rounded-md border-border bg-secondary px-8 py-4">
+        <h2 className="w-full text-2xl">Comments</h2>
 
         {accessToken ? (
           <CommentForm

@@ -1,5 +1,4 @@
 import { Comment } from "../../types/models";
-import styles from "./CommentsList.module.css";
 
 interface commentListProps {
   comments: Comment[];
@@ -7,14 +6,14 @@ interface commentListProps {
 
 export default function CommentsList({ comments }: commentListProps) {
   return (
-    <ul className={styles.comments}>
+    <ul className="flex flex-col gap-4 pt-4">
       {comments.map((comment) => (
-        <li key={comment._id} className={styles.comment}>
-          <p className={styles.commentAuthor}>{comment.author}</p>
-          <p className={styles.commentCreatedAt}>
+        <li key={comment._id} className="rounded-md bg-secondary p-4 border">
+          <p className="text-base font-bold leading-none">{comment.author}</p>
+          <p className="text-sm">
             {new Date(comment.createdAt).toLocaleDateString()}
           </p>
-          <p className={styles.commentContent}>{comment.content}</p>
+          <p className="mt-1">{comment.content}</p>
         </li>
       ))}
     </ul>

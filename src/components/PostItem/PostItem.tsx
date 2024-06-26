@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { Post } from "../../types/models";
-import styles from "./PostItem.module.css";
 
 interface PostItemProps {
   post: Post;
@@ -20,15 +19,15 @@ export default function PostItem({ post }: PostItemProps) {
       : stripHtmlTags(post.content);
 
   return (
-    <li className={styles.postItem}>
+    <li className="rounded-md border bg-secondary p-4">
       <Link to={`/posts/${post._id}`}>
-        <h3 className={styles.postTitle}>{post.title}</h3>
-        <p className={styles.postContent}>{truncatedContent}</p>
-        <p className={styles.postAuthor}>
+        <h3 className="mb-2 text-2xl">{post.title}</h3>
+        <p className="">{truncatedContent}</p>
+        <p className="mb-4 italic">
           <span>by </span>
           {post.author}
         </p>
-        <p className={styles.postDate}>{formattedDate}</p>
+        <p className="color-muted-foreground text-xs">{formattedDate}</p>
       </Link>
     </li>
   );
