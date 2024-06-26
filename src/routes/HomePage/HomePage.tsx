@@ -1,7 +1,6 @@
 import { useLoaderData } from "react-router-dom";
 import PostItem from "../../components/PostItem/PostItem";
 import { Post } from "../../types/models";
-import styles from "./HomePage.module.css";
 
 export default function HomePage() {
   const posts = useLoaderData() as Post[];
@@ -10,13 +9,13 @@ export default function HomePage() {
     return null; // or loading indicator or error message
   }
   return (
-    <div className={styles.homePage}>
-      <h2 className={styles.header}>Blog Posts</h2>
-      <ul className={styles.postList}>
+    <section className="flex flex-col">
+      <h2 className="mb-4 text-4xl">Blog Posts</h2>
+      <ul className="flex flex-col gap-4">
         {posts.map((post: Post) => (
           <PostItem key={post._id} post={post} />
         ))}
       </ul>
-    </div>
+    </section>
   );
 }

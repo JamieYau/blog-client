@@ -1,56 +1,105 @@
 import { useState } from "react";
 import useAuth from "../../contexts/useAuth";
-import styles from "./LoginPage.module.css";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+
+const formSchema = z.object({
+  username: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+  password: z
+    .string()
+    .min(8, {
+      message: "Password must be at least 8 characters long",
+    })
+    .max(32, { message: "Password must be max 32 characters long" }),
+});
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const { login } = useAuth();
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+  });
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     setError(""); // Clear any previous errors
     try {
-      await login(username, password);
+      await login(values.username, values.password);
     } catch (error) {
       setError((error as Error).message); // Set the error message
     }
-  };
+  }
 
   return (
-    <div className={styles.loginPage}>
-      <div className={styles.loginContainer}>
-        <h2 className={styles.loginTitle}>Login</h2>
-        <form onSubmit={handleLogin} className={styles.loginForm}>
-          <div className={styles.formField}>
-            <label htmlFor={styles["username"]}>Username:</label>
-            <input
-              id={styles["username"]}
-              type="text"
-              value={username}
-              required
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-          <div className={styles.formField}>
-            <label htmlFor={styles["password"]}>Password:</label>
-            <input
-              id={styles["password"]}
-              type="password"
-              value={password}
-              required
-              minLength={8}
-              maxLength={32}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          {error && <p className={styles.error}>{error}</p>}
-          <button className={styles.loginButton} type="submit">
-            Login
-          </button>
-        </form>
-      </div>
-    </div>
+    <section className="flex flex-1 flex-col items-center justify-center">
+      <Card className="w-11/12 max-w-96">
+        <CardHeader>
+          <CardTitle className="text-center">Login</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Username</FormLabel>
+                    <FormControl>
+                      <Input placeholder="username" {...field} />
+                    </FormControl>
+                    <FormDescription>Guest Username: Guest</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input placeholder="password" {...field} />
+                    </FormControl>
+                    <FormDescription>Guest Password: password</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit" className="w-full">Login</Button>
+            </form>
+          </Form>
+        </CardContent>
+        <CardFooter>
+          {error && <p className="text-destructive">{error}</p>}
+        </CardFooter>
+      </Card>
+    </section>
   );
 }

@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import useAuth from "../../contexts/useAuth";
-import styles from "./Nav.module.css";
-import logo from "../../assets/logo1lightcrop.png";
+import logo from "../../assets/logo1crop.png";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { buttonVariants } from "@/components/ui/button";
 
 export default function Nav() {
   const { user, logout } = useAuth();
@@ -9,22 +10,26 @@ export default function Nav() {
   const userInitial = isLoggedIn ? user.username.charAt(0).toUpperCase() : "";
 
   return (
-    <nav className={styles.nav}>
-      <Link to="/">
-        <img className={styles.logo} src={logo} alt="<DevBlog/>" />
+    <nav className="flex items-center justify-between px-16 py-4 shadow-sm">
+      <Link to="/" className="flex">
+        <img className="h-10" src={logo} alt="<DevBlog/>" />
       </Link>
-      <div className={styles.rightSection}>
+      <div className="flex items-center">
         {isLoggedIn ? (
-          <div className={styles.profileContainer}>
-            <div className={styles.profileIcon}>
-              <span className={styles.userInitial}>{userInitial}</span>
-            </div>
-            <span className={styles.logoutText} onClick={logout}>
+          <div className="flex cursor-pointer items-center gap-4">
+            <Avatar>
+              <AvatarImage />
+              <AvatarFallback>{userInitial}</AvatarFallback>
+            </Avatar>
+            <span
+              className={buttonVariants({ variant: "default" })}
+              onClick={logout}
+            >
               Logout
             </span>
           </div>
         ) : (
-          <Link to="/login" className={styles.loginLink}>
+          <Link to="/login" className={buttonVariants({ variant: "default" })}>
             Login
           </Link>
         )}

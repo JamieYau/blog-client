@@ -10,7 +10,7 @@ export default function Root() {
     <>
       <AuthProvider>
         <Nav />
-        <main>
+        <main className="flex h-full flex-1 flex-col p-8">
           <Outlet />
         </main>
         <Footer />
