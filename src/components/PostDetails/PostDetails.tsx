@@ -1,21 +1,34 @@
 import { Post } from "../../types/models";
+import { FaRegComment } from "react-icons/fa";
+import { Badge } from "../ui/badge";
 
 interface postProps {
   post: Post;
+  commentCount: number;
 }
 
-export default function PostDetails({ post }: postProps) {
+export default function PostDetails({ post, commentCount }: postProps) {
   return (
     <>
-      <h1 className="text-5xl">{post.title}</h1>
-      <div className="flex font-medium text-muted-foreground mb-4">
-        <p className="pr-4 border-r">{post.author}</p>
-        <p className="pl-4">
-          {new Date(post.createdAt).toLocaleDateString()}
-        </p>
+    <img src={post.coverImageUrl} alt="" />
+      <h1 className="my-8 text-5xl font-bold">{post.title}</h1>
+      <div className="flex pb-8 font-medium text-muted-foreground">
+        <p className="border-r pr-4">{post.author}</p>
+        <p className="pl-4">{new Date(post.createdAt).toLocaleDateString()}</p>
+      </div>
+      <div className="flex w-full justify-between border-y py-4">
+        <span className="flex items-center gap-1 leading-none text-muted-foreground">
+          <FaRegComment />
+          {commentCount}
+        </span>
+        <span className="space-x-2">
+          {post.tags.map((tag) => (
+            <Badge key={tag}>{tag}</Badge>
+          ))}
+        </span>
       </div>
       <div
-        className="bg-secondary px-8 py-4 border rounded-md"
+        className="mt-8 text-lg tracking-tight"
         dangerouslySetInnerHTML={{ __html: post.content }}
       ></div>
     </>

@@ -27,11 +27,11 @@ export default function PostItem({ post }: PostItemProps) {
         <div className="flex min-h-full w-full flex-col">
           <h2 className="mb-2 text-2xl font-bold">{post.title}</h2>
           <p className="color-muted-foreground text-sm mb-1">{formattedDate}</p>
-          <div className="mb-4 space-x-2">
+          <span className="mb-4 space-x-2">
             {post.tags.map((tag) => (
               <Badge key={tag}>{tag}</Badge>
             ))}
-          </div>
+          </span>
           <p className="mb-1 flex-1 tracking-tight">{truncatedContent}</p>
           <p className="w-full text-end font-medium leading-none">
             <span>by </span>
