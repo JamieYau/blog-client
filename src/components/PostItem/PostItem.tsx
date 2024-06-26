@@ -9,10 +9,6 @@ interface PostItemProps {
 
 export default function PostItem({ post }: PostItemProps) {
   const formattedDate = new Date(post.createdAt).toLocaleDateString();
-  const truncatedContent =
-    stripHtmlTags(post.content).length > 100
-      ? stripHtmlTags(post.content).substring(0, 100) + "..."
-      : stripHtmlTags(post.content);
 
   return (
     <li className="border-b pb-4">
@@ -26,13 +22,15 @@ export default function PostItem({ post }: PostItemProps) {
         />
         <div className="flex min-h-full w-full flex-col">
           <h2 className="mb-2 text-2xl font-bold">{post.title}</h2>
-          <p className="color-muted-foreground text-sm mb-1">{formattedDate}</p>
+          <p className="color-muted-foreground mb-1 text-sm">{formattedDate}</p>
           <span className="mb-4 space-x-2">
             {post.tags.map((tag) => (
               <Badge key={tag}>{tag}</Badge>
             ))}
           </span>
-          <p className="mb-1 flex-1 tracking-tight">{truncatedContent}</p>
+          <p className="mb-1 line-clamp-4 flex-1 tracking-tight">
+            {stripHtmlTags(post.content)}
+          </p>
           <p className="w-full text-end font-medium leading-none">
             <span>by </span>
             {post.author}
@@ -45,6 +43,10 @@ export default function PostItem({ post }: PostItemProps) {
 
 // Utility function to strip HTML tags and extract text content
 const stripHtmlTags = (html: string) => {
+  let formattedText = "";
   const doc = new DOMParser().parseFromString(html, "text/html");
-  return doc.body.textContent || "";
+  if (doc.body.textContent) {
+    formattedText = doc.body.textContent.replace("/&nbsp;/g", "");
+  }
+  return formattedText;
 };

@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import useAuth from "../../contexts/useAuth";
-import logo from "../../assets/logo1crop.png";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
+const bigLogo = "/logo1crop.png";
+const logo = "/logo2crop.png";
 
 export default function Nav() {
   const { user, logout } = useAuth();
@@ -13,7 +14,12 @@ export default function Nav() {
     <header className="flex w-full justify-center shadow-sm">
       <nav className="m-auto flex w-full items-center justify-between p-4 sm:px-8">
         <Link to="/" className="flex">
-          <img className="h-10 object-contain" src={logo} alt="<DevBlog/>" />
+          <img
+            src={bigLogo}
+            alt="<DevBlog/>"
+            className="hidden h-10 sm:block"
+          />
+          <img src={logo} alt="</>" className="sm:hidden h-10"/>
         </Link>
         <div className="flex items-center">
           {isLoggedIn ? (
