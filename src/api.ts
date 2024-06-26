@@ -8,7 +8,7 @@ function isPost(item: Post | Comment): item is Post {
 
 //helper function to format comments and projects with author
 export async function formatWithAuthor(
-  item: Post | Comment
+  item: Post | Comment,
 ): Promise<Post | Comment> {
   try {
     const authorResponse = await fetch(`${BASE_URL}/users/${item.authorId}`);
@@ -45,7 +45,7 @@ export async function getPosts(): Promise<Post[]> {
     }
     // Fetch the author's name for each post
     const postsWithAuthors = await Promise.all(
-      postsData.data.map(formatWithAuthor)
+      postsData.data.map(formatWithAuthor),
     );
     return postsWithAuthors as Post[];
   } catch (error) {
@@ -76,7 +76,7 @@ export async function getPost(postId: string): Promise<Post> {
 
 // Function to get all comments for a post
 export async function getPostComments(
-  postId: string
+  postId: string,
 ): Promise<Comment[] | null> {
   // Fetch the list of blog comments from your API
   try {
@@ -87,7 +87,7 @@ export async function getPostComments(
     }
     // Fetch the author's name for each comment
     const commentsWithAuthors = await Promise.all(
-      commentsData.data.map(formatWithAuthor)
+      commentsData.data.map(formatWithAuthor),
     );
     return commentsWithAuthors as Comment[];
   } catch (error) {
@@ -98,7 +98,7 @@ export async function getPostComments(
 
 export async function login(
   username: string,
-  password: string
+  password: string,
 ): Promise<LoginResponse> {
   try {
     const response = await fetch(`${BASE_URL}/auth/login`, {
@@ -143,7 +143,7 @@ export async function refreshToken(): Promise<RefreshTokenResponse> {
 
 export async function postComment(
   postId: string,
-  comment: Partial<Comment>
+  comment: Partial<Comment>,
 ): Promise<Comment> {
   const accessToken = localStorage.getItem("accessToken");
   const response = await fetch(`${BASE_URL}/posts/${postId}/comments`, {
@@ -156,4 +156,22 @@ export async function postComment(
   });
   const data: ApiResponse<Comment> = await response.json();
   return data.data;
+}
+
+export async function toggleLike(postId: string): Promise<Post> {
+  const token = localStorage.getItem("accessToken");
+  const response = await fetch(`${BASE_URL}/posts/${postId}/toggle-like`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to toggle like");
+  }
+
+  const updatedPost: ApiResponse<Post> = await response.json();
+  return updatedPost.data;
 }
