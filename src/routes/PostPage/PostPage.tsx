@@ -43,7 +43,9 @@ export default function PostPage() {
         <PostDetails post={post} commentCount={comments.length} />
       </article>
       <section className="flex w-full flex-col gap-4">
-        <h2 className="w-full text-2xl font-medium">Comments</h2>
+        <h2 className="w-full text-2xl font-medium">
+          Comments <span>{`(${comments.length})`}</span>
+        </h2>
 
         {accessToken ? (
           <CommentForm
