@@ -4,9 +4,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { IoEllipsisVertical } from "react-icons/io5";
-import { Dialog, DialogTrigger } from "../ui/dialog";
-import EditCommentDialog from "../EditCommentDialog/EditCommentDialog";
+import EditCommentDialog from "./EditCommentDialog";
 import { Comment } from "@/types/models";
 import { useState } from "react";
 

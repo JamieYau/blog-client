@@ -1,5 +1,3 @@
-import { DialogDescription } from "@radix-ui/react-dialog";
-import { DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Comment } from "@/types/models";
 import { formatWithAuthor, updateComment } from "@/api";
 import { redirect } from "react-router-dom";
@@ -7,6 +5,12 @@ import useAuth from "@/contexts/useAuth";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import {
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -15,7 +19,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { Textarea } from "../ui/textarea";
+import { Textarea } from "@/components/ui/textarea";
 
 interface commentProps {
   comment: Comment;
@@ -53,7 +57,9 @@ export default function EditCommentDialog({
       const updatedComment = await updateComment(comment._id, {
         content: values.comment,
       });
-      const formattedComment = await formatWithAuthor(updatedComment) as Comment;
+      const formattedComment = (await formatWithAuthor(
+        updatedComment,
+      )) as Comment;
       onUpdateComment(formattedComment);
       onClose();
     } catch (error) {

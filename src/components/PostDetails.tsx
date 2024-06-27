@@ -1,13 +1,13 @@
-import { Post } from "../../types/models";
+import { Post } from "../types/models";
 import { FaRegComment } from "react-icons/fa";
-import { Badge } from "../ui/badge";
+import { Badge } from "./ui/badge";
 import Prism from "prismjs";
 import { AiOutlineLike } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import { toggleLike } from "@/api";
 import { cn } from "@/lib/utils";
 import useAuth from "@/contexts/useAuth";
-import { Separator } from "../ui/separator";
+import { Separator } from "./ui/separator";
 
 interface postProps {
   post: Post;

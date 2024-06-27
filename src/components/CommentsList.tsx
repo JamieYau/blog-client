@@ -1,6 +1,6 @@
-import { Comment } from "../../types/models";
+import { Comment } from "../types/models";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import CommentDropdown from "../CommentDropdown/CommentDropdown";
+import CommentDropdown from "./CommentDropdown";
 import useAuth from "@/contexts/useAuth";
 
 interface commentListProps {
@@ -8,7 +8,10 @@ interface commentListProps {
   onUpdateComment: (updatedComment: Comment) => void;
 }
 
-export default function CommentsList({ comments, onUpdateComment }: commentListProps) {
+export default function CommentsList({
+  comments,
+  onUpdateComment,
+}: commentListProps) {
   const { user } = useAuth();
   return (
     <ul className="flex flex-col gap-4 pt-4">
@@ -21,7 +24,10 @@ export default function CommentsList({ comments, onUpdateComment }: commentListP
                   {comment.author}
                 </p>
                 {user?.userId === comment.authorId && (
-                  <CommentDropdown comment={comment} onUpdateComment={onUpdateComment} />
+                  <CommentDropdown
+                    comment={comment}
+                    onUpdateComment={onUpdateComment}
+                  />
                 )}
               </div>
               <p className="text-sm text-muted-foreground">

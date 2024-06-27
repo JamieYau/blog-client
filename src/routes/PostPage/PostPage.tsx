@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useLoaderData, redirect, Link } from "react-router-dom";
-import { postComment, formatWithAuthor } from "../../api";
-import PostDetails from "../../components/PostDetails/PostDetails";
-import CommentsList from "../../components/CommentsList/CommentsList";
-import CommentForm from "../../components/CommentForm/CommentForm";
-import { Comment, Post } from "../../types/models";
+import { postComment, formatWithAuthor } from "@/api";
+import PostDetails from "@/components/PostDetails";
+import CommentsList from "@/components/CommentsList";
+import CommentForm from "@/components/CommentForm";
+import { Comment, Post } from "@/types/models";
 import { buttonVariants } from "@/components/ui/button";
 import useAuth from "@/contexts/useAuth";
 
@@ -37,14 +37,16 @@ export default function PostPage() {
     }
   };
 
-const handleUpdateComment = async (updatedComment: Comment) => {
-  const formattedComment = await formatWithAuthor(updatedComment) as Comment;
-  setComments((prevComments) =>
-    prevComments.map((comment) =>
-      comment._id === formattedComment._id ? formattedComment : comment,
-    ),
-  );
-};
+  const handleUpdateComment = async (updatedComment: Comment) => {
+    const formattedComment = (await formatWithAuthor(
+      updatedComment,
+    )) as Comment;
+    setComments((prevComments) =>
+      prevComments.map((comment) =>
+        comment._id === formattedComment._id ? formattedComment : comment,
+      ),
+    );
+  };
 
   return (
     <div className="flex w-full max-w-2xl flex-col items-center">

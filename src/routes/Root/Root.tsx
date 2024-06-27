@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import Nav from "../../components/Nav/Nav";
-import Footer from "../../components/Footer/Footer";
+import Nav from "../../components/Nav";
+import Footer from "../../components/Footer";
 
 import AuthProvider from "../../contexts/AuthProvider";
 
@@ -10,7 +10,7 @@ export default function Root() {
     <>
       <AuthProvider>
         <Nav />
-        <main className="flex h-full max-w-6xl flex-1 flex-col p-4 sm:p-8 m-auto">
+        <main className="m-auto flex h-full max-w-6xl flex-1 flex-col p-4 sm:p-8">
           <Outlet />
         </main>
         <Footer />
