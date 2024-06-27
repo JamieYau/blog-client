@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { Post } from "../../types/models";
+import { Post } from "@/types/models";
 import placeholder from "/placeholder.jpg";
-import { Badge } from "../ui/badge";
+import { Badge } from "@/components/ui/badge";
 
 interface PostItemProps {
   post: Post;

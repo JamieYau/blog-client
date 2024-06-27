@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import useAuth from "../../contexts/useAuth";
+import useAuth from "@/contexts/useAuth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
 const bigLogo = "/logo1crop.png";

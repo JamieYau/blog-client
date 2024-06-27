@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useLoaderData, redirect, Link } from "react-router-dom";
-import { postComment, formatWithAuthor } from "../../api";
-import PostDetails from "../../components/PostDetails/PostDetails";
-import CommentsList from "../../components/CommentsList/CommentsList";
-import CommentForm from "../../components/CommentForm/CommentForm";
-import { Comment, Post } from "../../types/models";
+import { postComment, formatWithAuthor, deleteComment } from "@/api";
+import PostDetails from "@/components/PostDetails";
+import CommentsList from "@/components/CommentsList";
+import CommentForm from "@/components/CommentForm";
+import { Comment, Post } from "@/types/models";
 import { buttonVariants } from "@/components/ui/button";
 import useAuth from "@/contexts/useAuth";
 
@@ -37,14 +37,34 @@ export default function PostPage() {
     }
   };
 
+  const handleUpdateComment = async (updatedComment: Comment) => {
+    const formattedComment = (await formatWithAuthor(
+      updatedComment,
+    )) as Comment;
+    setComments((prevComments) =>
+      prevComments.map((comment) =>
+        comment._id === formattedComment._id ? formattedComment : comment,
+      ),
+    );
+  };
+
+  const handleDeleteComment = async (comment: Comment) => {
+    const response = await deleteComment(comment._id);
+    response &&
+      setComments((prevComments) =>
+        prevComments.filter((c) => c._id !== comment._id),
+      );
+  };
+
   return (
     <div className="flex w-full max-w-2xl flex-col items-center">
       <article className="mb-8 w-full pt-8">
         <PostDetails post={post} commentCount={comments.length} />
       </article>
       <section className="flex w-full flex-col gap-4">
-        <h2 className="w-full text-2xl font-medium">Comments</h2>
-
+        <h2 className="w-full text-2xl font-medium">
+          Comments <span>{`(${comments.length})`}</span>
+        </h2>
         {accessToken ? (
           <CommentForm
             newComment={newComment}
@@ -56,8 +76,11 @@ export default function PostPage() {
             Login to post a comment
           </Link>
         )}
-
-        <CommentsList comments={comments} />
+        <CommentsList
+          comments={comments}
+          onUpdateComment={handleUpdateComment}
+          onDeleteComment={handleDeleteComment}
+        />
       </section>
     </div>
   );

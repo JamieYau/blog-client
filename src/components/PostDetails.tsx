@@ -1,12 +1,13 @@
-import { Post } from "../../types/models";
+import { Post } from "../types/models";
 import { FaRegComment } from "react-icons/fa";
-import { Badge } from "../ui/badge";
+import { Badge } from "./ui/badge";
 import Prism from "prismjs";
 import { AiOutlineLike } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import { toggleLike } from "@/api";
 import { cn } from "@/lib/utils";
 import useAuth from "@/contexts/useAuth";
+import { Separator } from "./ui/separator";
 
 interface postProps {
   post: Post;
@@ -42,7 +43,8 @@ export default function PostDetails({ post, commentCount }: postProps) {
         <p className="border-r pr-4">{post.author}</p>
         <p className="pl-4">{new Date(post.createdAt).toLocaleDateString()}</p>
       </div>
-      <div className="flex w-full justify-between border-y p-4">
+      <Separator />
+      <div className="flex w-full justify-between p-4">
         <div className="flex select-none gap-8 text-muted-foreground">
           <span
             className={cn("flex items-center gap-1 leading-none", {
@@ -72,6 +74,7 @@ export default function PostDetails({ post, commentCount }: postProps) {
           </span>
         </div>
       </div>
+      <Separator />
       <div
         className="post-content mt-8 text-lg tracking-tight"
         dangerouslySetInnerHTML={{ __html: post.content }}
