@@ -19,7 +19,7 @@ export default function CommentsList({ comments }: commentListProps) {
                 <p className="text-base font-semibold leading-none">
                   {comment.author}
                 </p>
-                {user?.userId === comment.authorId && <CommentDropdown />}
+                {user?.userId === comment.authorId && <CommentDropdown comment={comment}/>}
               </div>
               <p className="text-sm text-muted-foreground">
                 {new Date(comment.createdAt).toLocaleDateString()}

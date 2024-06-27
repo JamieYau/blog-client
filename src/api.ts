@@ -158,6 +158,28 @@ export async function postComment(
   return data.data;
 }
 
+export async function updateComment(
+  commentId: string,
+  content: Partial<Comment>,
+): Promise<Comment> {
+  const accessToken = localStorage.getItem("accessToken");
+  try {
+    const response = await fetch(`${BASE_URL}/comments/${commentId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(content),
+    });
+    const data: ApiResponse<Comment> = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error("Error Updating comment:", error);
+    throw error;
+  }
+}
+
 export async function toggleLike(postId: string): Promise<Post> {
   const token = localStorage.getItem("accessToken");
   const response = await fetch(`${BASE_URL}/posts/${postId}/toggle-like`, {

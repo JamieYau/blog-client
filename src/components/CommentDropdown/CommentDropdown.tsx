@@ -7,8 +7,13 @@ import {
 import { IoEllipsisVertical } from "react-icons/io5";
 import { Dialog, DialogTrigger } from "../ui/dialog";
 import EditCommentDialog from "../EditCommentDialog/EditCommentDialog";
+import { Comment } from "@/types/models";
 
-export default function CommentDropdown() {
+interface commentProps {
+  comment: Comment;
+}
+
+export default function CommentDropdown({ comment }: commentProps) {
   return (
     <Dialog>
       <DropdownMenu>
@@ -22,7 +27,7 @@ export default function CommentDropdown() {
           <DropdownMenuItem>Delete</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <EditCommentDialog />
+      <EditCommentDialog comment={comment} />
     </Dialog>
   );
 }
