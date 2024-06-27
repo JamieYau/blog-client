@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useLoaderData, redirect, Link } from "react-router-dom";
 import { postComment, formatWithAuthor, deleteComment } from "@/api";
 import PostDetails from "@/components/PostDetails";
-import CommentsList from "@/components/CommentsList";
 import CommentForm from "@/components/CommentForm";
 import { Comment, Post } from "@/types/models";
 import { buttonVariants } from "@/components/ui/button";
 import useAuth from "@/contexts/useAuth";
+import CommentItem from "@/components/Comment";
 
 interface PostPageLoaderData {
   post: Post;
@@ -49,6 +49,7 @@ export default function PostPage() {
   };
 
   const handleDeleteComment = async (comment: Comment) => {
+    await checkTokenExpiration();
     const response = await deleteComment(comment._id);
     response &&
       setComments((prevComments) =>
@@ -76,11 +77,16 @@ export default function PostPage() {
             Login to post a comment
           </Link>
         )}
-        <CommentsList
-          comments={comments}
-          onUpdateComment={handleUpdateComment}
-          onDeleteComment={handleDeleteComment}
-        />
+        <ul className="flex flex-col gap-4 pt-4">
+          {comments.map((comment) => (
+            <CommentItem
+              key={comment._id}
+              comment={comment}
+              onUpdateComment={handleUpdateComment}
+              onDeleteComment={handleDeleteComment}
+            />
+          ))}
+        </ul>
       </section>
     </div>
   );
