@@ -180,6 +180,27 @@ export async function updateComment(
   }
 }
 
+export async function deleteComment(commentId: string) {
+  const accessToken = localStorage.getItem("accessToken");
+  try {
+    const response = await fetch(`${BASE_URL}/comments/${commentId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    if (response.status === 204) {
+      return true;
+    } else {
+      const errorData = await response.json();
+      throw new Error(errorData.error);
+    }
+  } catch (error) {
+    console.error("Error deleting comment:", error);
+  }
+}
+
 export async function toggleLike(postId: string): Promise<Post> {
   const token = localStorage.getItem("accessToken");
   const response = await fetch(`${BASE_URL}/posts/${postId}/toggle-like`, {

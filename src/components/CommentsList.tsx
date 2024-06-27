@@ -6,11 +6,13 @@ import useAuth from "@/contexts/useAuth";
 interface commentListProps {
   comments: Comment[];
   onUpdateComment: (updatedComment: Comment) => void;
+  onDeleteComment: (comment: Comment) => void;
 }
 
 export default function CommentsList({
   comments,
   onUpdateComment,
+  onDeleteComment
 }: commentListProps) {
   const { user } = useAuth();
   return (
@@ -27,6 +29,7 @@ export default function CommentsList({
                   <CommentDropdown
                     comment={comment}
                     onUpdateComment={onUpdateComment}
+                    onDeleteComment={onDeleteComment}
                   />
                 )}
               </div>

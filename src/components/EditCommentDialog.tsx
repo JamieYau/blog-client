@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 
-interface commentProps {
+interface DialogProps {
   comment: Comment;
   onUpdateComment: (updatedComment: Comment) => void;
   onClose: () => void;
@@ -37,7 +37,7 @@ export default function EditCommentDialog({
   comment,
   onUpdateComment,
   onClose,
-}: commentProps) {
+}: DialogProps) {
   const { checkTokenExpiration } = useAuth();
   const accessToken = localStorage.getItem("accessToken");
 

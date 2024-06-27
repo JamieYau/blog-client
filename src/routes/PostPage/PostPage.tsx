@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLoaderData, redirect, Link } from "react-router-dom";
-import { postComment, formatWithAuthor } from "@/api";
+import { postComment, formatWithAuthor, deleteComment } from "@/api";
 import PostDetails from "@/components/PostDetails";
 import CommentsList from "@/components/CommentsList";
 import CommentForm from "@/components/CommentForm";
@@ -48,6 +48,14 @@ export default function PostPage() {
     );
   };
 
+  const handleDeleteComment = async (comment: Comment) => {
+    const response = await deleteComment(comment._id);
+    response &&
+      setComments((prevComments) =>
+        prevComments.filter((c) => c._id !== comment._id),
+      );
+  };
+
   return (
     <div className="flex w-full max-w-2xl flex-col items-center">
       <article className="mb-8 w-full pt-8">
@@ -71,6 +79,7 @@ export default function PostPage() {
         <CommentsList
           comments={comments}
           onUpdateComment={handleUpdateComment}
+          onDeleteComment={handleDeleteComment}
         />
       </section>
     </div>
