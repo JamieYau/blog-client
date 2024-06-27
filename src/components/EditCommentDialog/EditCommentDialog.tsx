@@ -1,7 +1,7 @@
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Comment } from "@/types/models";
-import { updateComment } from "@/api";
+import { formatWithAuthor, updateComment } from "@/api";
 import { redirect } from "react-router-dom";
 import useAuth from "@/contexts/useAuth";
 import { z } from "zod";
@@ -53,7 +53,8 @@ export default function EditCommentDialog({
       const updatedComment = await updateComment(comment._id, {
         content: values.comment,
       });
-      onUpdateComment(updatedComment);
+      const formattedComment = await formatWithAuthor(updatedComment) as Comment;
+      onUpdateComment(formattedComment);
       onClose();
     } catch (error) {
       console.error("Error posting comment", error);

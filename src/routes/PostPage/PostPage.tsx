@@ -37,13 +37,14 @@ export default function PostPage() {
     }
   };
 
-  const handleUpdateComment = (updatedComment: Comment) => {
-    setComments((prevComments) =>
-      prevComments.map((comment) =>
-        comment._id === updatedComment._id ? updatedComment : comment,
-      ),
-    );
-  };
+const handleUpdateComment = async (updatedComment: Comment) => {
+  const formattedComment = await formatWithAuthor(updatedComment) as Comment;
+  setComments((prevComments) =>
+    prevComments.map((comment) =>
+      comment._id === formattedComment._id ? formattedComment : comment,
+    ),
+  );
+};
 
   return (
     <div className="flex w-full max-w-2xl flex-col items-center">
