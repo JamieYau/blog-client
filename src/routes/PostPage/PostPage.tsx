@@ -46,7 +46,6 @@ export default function PostPage() {
         <h2 className="w-full text-2xl font-medium">
           Comments <span>{`(${comments.length})`}</span>
         </h2>
-
         {accessToken ? (
           <CommentForm
             newComment={newComment}
@@ -58,7 +57,6 @@ export default function PostPage() {
             Login to post a comment
           </Link>
         )}
-
         <CommentsList comments={comments} />
       </section>
     </div>
