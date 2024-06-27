@@ -34,7 +34,7 @@ export default function CommentForm({
         onChange={(e) => setNewComment(e.target.value)}
         required
         placeholder="Add a comment..."
-        className="min-h-8 border-none focus:h-20 focus-visible:ring-0 focus-visible:ring-offset-0"
+        className="min-h-9 border-none focus-visible:ring-0 focus-visible:ring-offset-0"
         onFocus={handleFocus}
         onBlur={handleBlur}
       />
