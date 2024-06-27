@@ -9,7 +9,7 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 );
 
 export default function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<{ username: string } | null>(
+  const [user, setUser] = useState<{ username: string; userId: string } | null>(
     JSON.parse(localStorage.getItem("user") as string) || null,
   );
   const [accessToken, setAccessToken] = useState<string>(
@@ -43,10 +43,11 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   const login = async (username: string, password: string) => {
     try {
       const response = await apiLogin(username, password);
-      setUser({ username });
-      setAccessToken(response.accessToken);
-      localStorage.setItem("user", JSON.stringify({ username }));
-      localStorage.setItem("accessToken", response.accessToken);
+      const { userId, accessToken } = response;
+      setUser({ username, userId });
+      setAccessToken(accessToken);
+      localStorage.setItem("user", JSON.stringify({ username, userId }));
+      localStorage.setItem("accessToken", accessToken);
       if (window.history?.length && window.history.length > 1) {
         navigate(-1);
       } else {

@@ -5,8 +5,10 @@ export interface ApiResponse<T> {
 }
 
 export interface LoginResponse {
+  success: boolean;
   accessToken: string;
-  refreshToken: string;
+  userId: string;
+  isAdmin: boolean;
   message?: string;
 }
 

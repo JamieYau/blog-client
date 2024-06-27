@@ -38,12 +38,12 @@ export default function PostPage() {
   };
 
   return (
-    <>
-      <section className="mb-8">
-        <PostDetails post={post} />
-      </section>
-      <section className="flex flex-col gap-4 rounded-md border-border bg-secondary px-8 py-4">
-        <h2 className="w-full text-2xl">Comments</h2>
+    <div className="flex w-full max-w-2xl flex-col items-center">
+      <article className="mb-8 w-full pt-8">
+        <PostDetails post={post} commentCount={comments.length} />
+      </article>
+      <section className="flex w-full flex-col gap-4">
+        <h2 className="w-full text-2xl font-medium">Comments</h2>
 
         {accessToken ? (
           <CommentForm
@@ -59,6 +59,6 @@ export default function PostPage() {
 
         <CommentsList comments={comments} />
       </section>
-    </>
+    </div>
   );
 }

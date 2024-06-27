@@ -13,9 +13,10 @@ export interface Post {
   published: boolean;
   coverImageUrl?: string;
   tags: string[];
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   author?: string;
+  likes: string[];
 }
 
 export interface Comment {
@@ -23,7 +24,7 @@ export interface Comment {
   content: string;
   authorId: string;
   postId: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   author?: string;
 }
