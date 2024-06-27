@@ -13,14 +13,18 @@ export default function CommentForm({
   handlePostComment,
 }: CommentFormProps) {
   return (
-    <form onSubmit={handlePostComment} className="flex flex-col items-end gap-2 pb-4 border-b w-full">
+    <form
+      onSubmit={handlePostComment}
+      className="flex w-full flex-col items-end gap-2 rounded-md border ring-offset-background has-[:focus]:ring-2 has-[:focus]:ring-ring has-[:focus]:ring-offset-0"
+    >
       <Textarea
         value={newComment}
         onChange={(e) => setNewComment(e.target.value)}
         required
         placeholder="Add a comment..."
+        className="border-none focus-visible:ring-0 focus-visible:ring-offset-0 min-h-10 focus:h-20"
       />
-      <Button type="submit">
+      <Button type="submit" className="mb-2 mr-2">
         Post Comment
       </Button>
     </form>
