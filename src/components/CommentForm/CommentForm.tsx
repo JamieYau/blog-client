@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 
@@ -12,6 +13,17 @@ export default function CommentForm({
   setNewComment,
   handlePostComment,
 }: CommentFormProps) {
+  const [isFocused, setIsFocused] = useState(false);
+
+  const handleFocus = () => setIsFocused(true);
+  const handleBlur = () => {
+    // Delay to allow submit button click
+    setTimeout(() => setIsFocused(false), 100);
+  };
+
+  const handleCancel = () => {
+    setIsFocused(false); // Remove focus
+  };
   return (
     <form
       onSubmit={handlePostComment}
@@ -22,11 +34,24 @@ export default function CommentForm({
         onChange={(e) => setNewComment(e.target.value)}
         required
         placeholder="Add a comment..."
-        className="border-none focus-visible:ring-0 focus-visible:ring-offset-0 min-h-10 focus:h-20"
+        className="min-h-8 border-none focus:h-20 focus-visible:ring-0 focus-visible:ring-offset-0"
+        onFocus={handleFocus}
+        onBlur={handleBlur}
       />
-      <Button type="submit" className="mb-2 mr-2">
-        Post Comment
-      </Button>
+      <div className="flex gap-2">
+        {isFocused && (
+          <Button
+            variant={"ghost"}
+            className="mb-2 mr-2"
+            onClick={handleCancel}
+          >
+            Cancel
+          </Button>
+        )}
+        <Button type="submit" className="mb-2 mr-2">
+          Publish
+        </Button>
+      </div>
     </form>
   );
 }
