@@ -4,7 +4,7 @@ import { Badge } from "./ui/badge";
 import Prism from "prismjs";
 import { AiOutlineLike } from "react-icons/ai";
 import { useEffect, useState } from "react";
-import { toggleLike } from "@/api";
+import { toggleLikePost } from "@/api";
 import { cn } from "@/lib/utils";
 import useAuth from "@/contexts/useAuth";
 import { Separator } from "./ui/separator";
@@ -15,7 +15,7 @@ interface postProps {
 }
 
 export default function PostDetails({ post, commentCount }: postProps) {
-  const { user } = useAuth();
+  const { user, checkTokenExpiration } = useAuth();
   const [likes, setLikes] = useState(post.likes.length);
   const [userLiked, setUserLiked] = useState(
     user ? post.likes.includes(user.userId) : false,
@@ -23,7 +23,8 @@ export default function PostDetails({ post, commentCount }: postProps) {
 
   const handleToggleLike = async () => {
     try {
-      const updatedPost = await toggleLike(post._id);
+      await checkTokenExpiration();
+      const updatedPost = await toggleLikePost(post._id);
       setLikes(updatedPost.likes.length);
       setUserLiked(user ? updatedPost.likes.includes(user.userId) : false); // Update user like status
     } catch (error) {

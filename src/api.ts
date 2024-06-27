@@ -201,7 +201,7 @@ export async function deleteComment(commentId: string) {
   }
 }
 
-export async function toggleLike(postId: string): Promise<Post> {
+export async function toggleLikePost(postId: string): Promise<Post> {
   const token = localStorage.getItem("accessToken");
   const response = await fetch(`${BASE_URL}/posts/${postId}/toggle-like`, {
     method: "POST",
@@ -217,4 +217,22 @@ export async function toggleLike(postId: string): Promise<Post> {
 
   const updatedPost: ApiResponse<Post> = await response.json();
   return updatedPost.data;
+}
+
+export async function toggleLikeComment(commentId: string): Promise<Comment> {
+  const token = localStorage.getItem("accessToken");
+  const response = await fetch(`${BASE_URL}/comments/${commentId}/toggle-like`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to toggle like");
+  }
+
+  const updatedComment: ApiResponse<Comment> = await response.json();
+  return updatedComment.data;
 }
