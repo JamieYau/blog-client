@@ -19,6 +19,8 @@ import { Textarea } from "../ui/textarea";
 
 interface commentProps {
   comment: Comment;
+  onUpdateComment: (updatedComment: Comment) => void;
+  onClose: () => void;
 }
 
 const formSchema = z.object({
@@ -27,7 +29,11 @@ const formSchema = z.object({
   }),
 });
 
-export default function EditCommentDialog({ comment }: commentProps) {
+export default function EditCommentDialog({
+  comment,
+  onUpdateComment,
+  onClose,
+}: commentProps) {
   const { checkTokenExpiration } = useAuth();
   const accessToken = localStorage.getItem("accessToken");
 
@@ -47,6 +53,8 @@ export default function EditCommentDialog({ comment }: commentProps) {
       const updatedComment = await updateComment(comment._id, {
         content: values.comment,
       });
+      onUpdateComment(updatedComment);
+      onClose();
     } catch (error) {
       console.error("Error posting comment", error);
     }

@@ -5,9 +5,10 @@ import useAuth from "@/contexts/useAuth";
 
 interface commentListProps {
   comments: Comment[];
+  onUpdateComment: (updatedComment: Comment) => void;
 }
 
-export default function CommentsList({ comments }: commentListProps) {
+export default function CommentsList({ comments, onUpdateComment }: commentListProps) {
   const { user } = useAuth();
   return (
     <ul className="flex flex-col gap-4 pt-4">
@@ -19,7 +20,9 @@ export default function CommentsList({ comments }: commentListProps) {
                 <p className="text-base font-semibold leading-none">
                   {comment.author}
                 </p>
-                {user?.userId === comment.authorId && <CommentDropdown comment={comment}/>}
+                {user?.userId === comment.authorId && (
+                  <CommentDropdown comment={comment} onUpdateComment={onUpdateComment} />
+                )}
               </div>
               <p className="text-sm text-muted-foreground">
                 {new Date(comment.createdAt).toLocaleDateString()}

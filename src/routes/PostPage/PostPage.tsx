@@ -37,6 +37,14 @@ export default function PostPage() {
     }
   };
 
+  const handleUpdateComment = (updatedComment: Comment) => {
+    setComments((prevComments) =>
+      prevComments.map((comment) =>
+        comment._id === updatedComment._id ? updatedComment : comment,
+      ),
+    );
+  };
+
   return (
     <div className="flex w-full max-w-2xl flex-col items-center">
       <article className="mb-8 w-full pt-8">
@@ -57,7 +65,10 @@ export default function PostPage() {
             Login to post a comment
           </Link>
         )}
-        <CommentsList comments={comments} />
+        <CommentsList
+          comments={comments}
+          onUpdateComment={handleUpdateComment}
+        />
       </section>
     </div>
   );
