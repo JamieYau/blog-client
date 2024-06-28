@@ -48,24 +48,23 @@ export default function PostDetails({ post, commentCount }: postProps) {
       <div className="flex w-full justify-between p-4">
         <div className="flex select-none gap-8 text-muted-foreground">
           <span
-            className={cn("flex items-center gap-1 leading-none", {
-              "font-medium text-foreground": userLiked,
-            })}
+            className={cn(
+              "flex cursor-pointer items-center gap-1 leading-none hover:text-foreground",
+              {
+                "font-medium text-foreground": userLiked,
+              },
+            )}
           >
-            <AiOutlineLike
-              className="h-5 w-5 cursor-pointer"
-              onClick={handleToggleLike}
-            />
-            <span className="cursor-default hover:text-foreground">
-              {likes}
-            </span>
+            <AiOutlineLike className="h-5 w-5" onClick={handleToggleLike} />
+            <span className="">{likes}</span>
           </span>
-          <span className="flex items-center gap-1 leading-none">
-            <FaRegComment className="cursor-pointer hover:text-foreground" />
-            <span className="cursor-default hover:text-foreground">
-              {commentCount}
-            </span>
-          </span>
+          <a
+            href="#comments"
+            className="flex cursor-pointer items-center gap-1 leading-none hover:text-foreground"
+          >
+            <FaRegComment className="" />
+            <span className="">{commentCount}</span>
+          </a>
         </div>
         <div>
           <span className="space-x-2">
