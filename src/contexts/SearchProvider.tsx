@@ -11,6 +11,7 @@ export const SearchProvider = ({ children }: { children: ReactNode }) => {
   const [searchQuery, setSearchQuery] = useState(
     searchParams.get("searchTerm") || "",
   );
+  const [sortOrder, setSortOrder] = useState(searchParams.get("order") || "");
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const navigate = useNavigate();
 
@@ -32,6 +33,8 @@ export const SearchProvider = ({ children }: { children: ReactNode }) => {
         recentSearches,
         setRecentSearches,
         handleSearchSubmit,
+        sortOrder,
+        setSortOrder,
       }}
     >
       {children}
