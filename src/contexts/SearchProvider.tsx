@@ -17,10 +17,15 @@ export const SearchProvider = ({ children }: { children: ReactNode }) => {
 
   const handleSearchSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSearchParams({ searchTerm: searchQuery });
-    searchQuery !== "" &&
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("searchTerm", searchQuery);
+    setSearchParams(params);
+    if (searchQuery !== "") {
       setRecentSearches((prev) => [...new Set([searchQuery, ...prev])]);
-    navigate(`/search?searchTerm=${encodeURIComponent(searchQuery)}`);
+    }
+    navigate(
+      `/search?searchTerm=${encodeURIComponent(searchQuery)}&sort=${encodeURIComponent(params.get("sort") || "")}`,
+    );
   };
 
   return (
