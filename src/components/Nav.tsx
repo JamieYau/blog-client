@@ -32,6 +32,7 @@ export default function Nav() {
           <img src={logo} alt="</>" className="h-10 sm:hidden" />
         </Link>
         <div className="flex items-center">
+          
           {isLoggedIn ? (
             <DropdownMenu>
               <DropdownMenuTrigger>

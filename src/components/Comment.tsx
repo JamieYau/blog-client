@@ -7,10 +7,10 @@ import {
 } from "@/components/ui/card";
 import CommentDropdown from "./CommentDropdown";
 import useAuth from "@/contexts/useAuth";
-import { AiOutlineLike } from "react-icons/ai";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { toggleLikeComment } from "@/api";
+import { Heart } from "lucide-react";
 
 interface commentProps {
   comment: Comment;
@@ -63,14 +63,16 @@ export default function CommentItem({
         <CardContent>
           <p className="mt-1">{comment.content}</p>
         </CardContent>
-        <CardFooter className="text-muted-foreground select-none">
+        <CardFooter className="select-none text-muted-foreground">
           <span
             className={cn("flex items-center gap-1 leading-none", {
               "font-medium text-foreground": userLiked,
             })}
           >
-            <AiOutlineLike
-              className="h-5 w-5 cursor-pointer"
+            <Heart
+              className={cn("h-5 w-5", {
+                "fill-red-500 text-red-500": userLiked,
+              })}
               onClick={handleToggleLike}
             />
             <span className="cursor-default hover:text-foreground">
