@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import useAuth from "@/contexts/useAuth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
@@ -20,12 +20,16 @@ export default function Nav() {
   const { user, logout } = useAuth();
   const isLoggedIn = user !== null;
   const userInitial = isLoggedIn ? user.username.charAt(0).toUpperCase() : "";
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState(
+    searchParams.get("searchTerm") || "",
+  );
 
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    navigate(`/search?query=${searchQuery}`);
+    setSearchParams({ searchTerm: searchQuery });
+    navigate(`/search?searchTerm=${encodeURIComponent(searchQuery)}`);
   };
 
   return (
@@ -50,7 +54,7 @@ export default function Nav() {
               placeholder="Search"
               className="w-full rounded border border-none bg-transparent px-5 py-[10px] pl-0 outline-none placeholder:text-muted-foreground"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(event) => setSearchQuery(event.target.value)}
             />
           </form>
           <Link to="/search" className="sm:hidden">
