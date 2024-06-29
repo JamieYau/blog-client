@@ -14,13 +14,26 @@ import {
 } from "@/components/ui/select";
 
 export default function SearchPage() {
-  const { searchParams, recentSearches, setRecentSearches, setSearchQuery } =
-    useSearch();
+  const {
+    searchParams,
+    recentSearches,
+    setRecentSearches,
+    setSearchQuery,
+    setSearchParams,
+    setSortOrder,
+  } = useSearch();
   const posts = useLoaderData() as Post[];
 
   const removeSearchItem = (index: number) => {
     const newRecentSearches = recentSearches.filter((_, i) => i !== index);
     setRecentSearches(newRecentSearches);
+  };
+
+  const handleSortChange = (value: string) => {
+    setSortOrder(value);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("sort", value);
+    setSearchParams(params);
   };
 
   return (
@@ -29,24 +42,22 @@ export default function SearchPage() {
       <section>
         {searchParams.get("searchTerm") ? (
           <>
-            <div className="flex justify-between">
-              <h1 className="my-7 text-2xl font-semibold tracking-tight text-muted-foreground sm:mt-0">
+            <div className="flex items-center justify-between">
+              <h1 className="my-7 text-2xl font-semibold tracking-tight text-muted-foreground sm:mt-0 md:text-4xl">
                 Results for
-                <span className="ml-1 text-foreground">
+                <span className="ml-1 text-foreground md:ml-2">
                   {searchParams.get("searchTerm")}
                 </span>
               </h1>
-              <form>
-                <Select>
-                  <SelectTrigger className="focus:ring-transparent">
-                    <SelectValue placeholder="Sort by date" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="desc">Newest</SelectItem>
-                    <SelectItem value="asc">Oldest</SelectItem>
-                  </SelectContent>
-                </Select>
-              </form>
+              <Select onValueChange={(value) => handleSortChange(value)}>
+                <SelectTrigger className="focus:ring-transparent w-fit">
+                  <SelectValue placeholder="Sort by date" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="desc">Newest</SelectItem>
+                  <SelectItem value="asc">Oldest</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <ul>
               {posts.map((post) => (
