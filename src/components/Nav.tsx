@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut } from "lucide-react";
+import { LogOut, Search } from "lucide-react";
 const bigLogo = "/logo1crop.png";
 const logo = "/logo2crop.png";
 
@@ -23,7 +23,7 @@ export default function Nav() {
   return (
     <header className="flex w-full justify-center shadow-sm">
       <nav className="m-auto flex w-full items-center justify-between p-4 sm:px-8">
-        <Link to="/" className="flex">
+        <Link to="/" className="flex flex-shrink-0">
           <img
             src={bigLogo}
             alt="<DevBlog/>"
@@ -31,8 +31,19 @@ export default function Nav() {
           />
           <img src={logo} alt="</>" className="h-10 sm:hidden" />
         </Link>
-        <div className="flex items-center">
-          
+        <div className="flex w-full items-center justify-end gap-6 sm:justify-between">
+          <form className="ml-4 hidden w-64 items-center rounded-full bg-muted sm:flex">
+            <Search className="mx-3 min-h-6 min-w-6 stroke-[1.5] text-muted-foreground" />
+            <input
+              type="text"
+              placeholder="Search"
+              className="w-full rounded border border-none bg-transparent px-5 py-[10px] pl-0 outline-none placeholder:text-muted-foreground"
+            />
+          </form>
+          <Link to="/search" className="sm:hidden">
+            <Search className="stroke-[1.5] text-muted-foreground" />
+          </Link>
+
           {isLoggedIn ? (
             <DropdownMenu>
               <DropdownMenuTrigger>
