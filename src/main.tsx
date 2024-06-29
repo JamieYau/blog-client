@@ -14,6 +14,7 @@ import "./index.css";
 import "prismjs/themes/prism-tomorrow.css";
 import "prismjs/plugins/line-numbers/prism-line-numbers.css";
 import "prismjs";
+import SearchPage from "./routes/SearchPage/SearchPage";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
         path: "/",
         element: <HomePage />,
         loader: homePageLoader,
+      },
+      {
+        path: "search",
+        element: <SearchPage />,
       },
       {
         path: "posts/:postId",
@@ -42,5 +47,5 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>
+  </React.StrictMode>,
 );
