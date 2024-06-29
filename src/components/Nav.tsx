@@ -2,6 +2,16 @@ import { Link } from "react-router-dom";
 import useAuth from "@/contexts/useAuth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { LogOut } from "lucide-react";
 const bigLogo = "/logo1crop.png";
 const logo = "/logo2crop.png";
 
@@ -23,18 +33,24 @@ export default function Nav() {
         </Link>
         <div className="flex items-center">
           {isLoggedIn ? (
-            <div className="flex cursor-pointer items-center gap-4">
-              <Avatar>
-                <AvatarImage />
-                <AvatarFallback>{userInitial}</AvatarFallback>
-              </Avatar>
-              <span
-                className={buttonVariants({ variant: "default" })}
-                onClick={logout}
-              >
-                Logout
-              </span>
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Avatar>
+                  <AvatarImage />
+                  <AvatarFallback>{userInitial}</AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DropdownMenuItem onSelect={logout}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Log out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
             <Link
               to="/login"
