@@ -2,11 +2,17 @@ import PostItem from "@/components/PostItem";
 import SearchBar from "@/components/SearchBar";
 import useSearch from "@/contexts/useSearch";
 import { Post } from "@/types/models";
+import { X } from "lucide-react";
 import { useLoaderData } from "react-router-dom";
 
 export default function SearchPage() {
-  const { searchParams, recentSearches } = useSearch();
+  const { searchParams, recentSearches, setRecentSearches } = useSearch();
   const posts = useLoaderData() as Post[];
+
+  const removeSearchItem = (index: number) => {
+    const newRecentSearches = recentSearches.filter((_, i) => i !== index);
+    setRecentSearches(newRecentSearches);
+  };
 
   return (
     <div className="flex w-full flex-col p-2">
@@ -28,12 +34,16 @@ export default function SearchPage() {
           </>
         ) : (
           <>
-            <h1 className="my-7 text-2xl font-semibold tracking-tight">
+            <h1 className="my-7 text-2xl font-semibold tracking-tight sm:mt-0">
               Recent searches
             </h1>
-            <ul>
-              {recentSearches.map((postName, i) => (
-                <li key={i}>{postName}</li>
+            <ul className="[&>*:not(:last-child)]:border-b">
+              {recentSearches.map((search, i) => (
+                <li key={i} className="flex w-full justify-between py-4">
+                  <span>{search}</span>
+                  <span>{i}</span>
+                  <X strokeWidth={1.1} onClick={() => removeSearchItem(i)} />
+                </li>
               ))}
             </ul>
           </>
