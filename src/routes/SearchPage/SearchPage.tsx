@@ -32,7 +32,7 @@ export default function SearchPage() {
   const handleSortChange = (value: string) => {
     setSortOrder(value);
     const params = new URLSearchParams(searchParams.toString());
-    params.set("sort", value);
+    params.set("order", value);
     setSearchParams(params);
   };
 

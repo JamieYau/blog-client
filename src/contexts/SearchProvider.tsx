@@ -24,7 +24,7 @@ export const SearchProvider = ({ children }: { children: ReactNode }) => {
       setRecentSearches((prev) => [...new Set([searchQuery, ...prev])]);
     }
     navigate(
-      `/search?searchTerm=${encodeURIComponent(searchQuery)}&sort=${encodeURIComponent(params.get("sort") || "")}`,
+      `/search?searchTerm=${encodeURIComponent(searchQuery)}&order=${encodeURIComponent(params.get("order") || "")}`,
     );
   };
 
