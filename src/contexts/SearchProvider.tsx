@@ -3,8 +3,9 @@ import {
   createContext,
   useState,
   ReactNode,
+  FormEvent,
 } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 export const SearchContext = createContext<SearchContextType | undefined>(undefined);
 
@@ -14,6 +15,14 @@ export const SearchProvider = ({ children }: { children: ReactNode }) => {
     searchParams.get("searchTerm") || "",
   );
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
+  const navigate = useNavigate();
+
+  const handleSearchSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSearchParams({ searchTerm: searchQuery });
+    setRecentSearches((prev) => [...new Set([searchQuery, ...prev])]);
+    navigate(`/search?searchTerm=${encodeURIComponent(searchQuery)}`);
+  };
 
   return (
     <SearchContext.Provider
@@ -24,6 +33,7 @@ export const SearchProvider = ({ children }: { children: ReactNode }) => {
         setSearchQuery,
         recentSearches,
         setRecentSearches,
+        handleSearchSubmit,
       }}
     >
       {children}

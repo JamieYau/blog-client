@@ -6,8 +6,7 @@ import { Post } from "@/types/models";
 import { useEffect, useState } from "react";
 
 export default function SearchPage() {
-  const { searchParams, setSearchParams, searchQuery, setSearchQuery, recentSearches, setRecentSearches } =
-    useSearch();
+  const { searchParams, recentSearches } = useSearch();
   const [posts, setPosts] = useState<Post[]>([]);
 
   // Fetch posts whenever searchParams change
@@ -24,20 +23,9 @@ export default function SearchPage() {
     })();
   }, [searchParams]);
 
-  const handleSearchSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setSearchParams({ searchTerm: searchQuery });
-    setRecentSearches((prev) => [...new Set([searchQuery, ...prev])]);
-  };
-
   return (
     <div className="flex w-full flex-col p-2">
-      <SearchBar
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        onSubmit={handleSearchSubmit}
-        formClassName="flex border bg-transparent sm:hidden"
-      />
+      <SearchBar formClassName="flex border bg-transparent sm:hidden" />
       <section>
         {searchParams.get("searchTerm") ? (
           <>

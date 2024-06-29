@@ -7,4 +7,5 @@ export interface SearchContextType {
   setSearchQuery: (query: string) => void;
   recentSearches: string[];
   setRecentSearches: React.Dispatch<React.SetStateAction<string[]>>;
+  handleSearchSubmit: (e: FormEvent<HTMLFormElement>) => void;
 }

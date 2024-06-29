@@ -1,27 +1,22 @@
 import { Search } from "lucide-react";
-import { FormEvent } from "react";
 import { cn } from "@/lib/utils";
+import useSearch from "@/contexts/useSearch";
 
 interface SearchBarProps {
-  searchQuery: string;
-  setSearchQuery: (query: string) => void;
-  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
   formClassName?: string;
   inputClassName?: string;
   svgClassName?: string;
 }
 
 export default function SearchBar({
-  searchQuery,
-  setSearchQuery,
-  onSubmit,
   formClassName,
   inputClassName,
   svgClassName,
 }: SearchBarProps) {
+   const { searchQuery, setSearchQuery, handleSearchSubmit } = useSearch();
   return (
     <form
-      onSubmit={onSubmit}
+      onSubmit={handleSearchSubmit}
       className={cn("items-center rounded-full", formClassName)}
     >
       <Search
