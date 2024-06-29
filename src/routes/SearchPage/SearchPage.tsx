@@ -1,17 +1,14 @@
 import { getPosts } from "@/api";
 import PostItem from "@/components/PostItem";
 import SearchBar from "@/components/SearchBar";
+import useSearch from "@/contexts/useSearch";
 import { Post } from "@/types/models";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 
 export default function SearchPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState(
-    searchParams.get("searchTerm") || "",
-  );
+  const { searchParams, setSearchParams, searchQuery, setSearchQuery, recentSearches, setRecentSearches } =
+    useSearch();
   const [posts, setPosts] = useState<Post[]>([]);
-  const [recentSearches, setRecentSearches] = useState<string[]>([]);
 
   // Fetch posts whenever searchParams change
   useEffect(() => {

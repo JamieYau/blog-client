@@ -1,4 +1,4 @@
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "@/contexts/useAuth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
@@ -12,8 +12,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { LogOut, Search } from "lucide-react";
-import { useState } from "react";
 import SearchBar from "@/components/SearchBar";
+import useSearch from "@/contexts/useSearch";
 const bigLogo = "/logo1crop.png";
 const logo = "/logo2crop.png";
 
@@ -21,15 +21,13 @@ export default function Nav() {
   const { user, logout } = useAuth();
   const isLoggedIn = user !== null;
   const userInitial = isLoggedIn ? user.username.charAt(0).toUpperCase() : "";
-  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState(
-    searchParams.get("searchTerm") || "",
-  );
+  const { setSearchParams, searchQuery, setSearchQuery, setRecentSearches } = useSearch();
 
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSearchParams({ searchTerm: searchQuery });
+    setRecentSearches((prev) => [...new Set([searchQuery, ...prev])]);
     navigate(`/search?searchTerm=${encodeURIComponent(searchQuery)}`);
   };
 
