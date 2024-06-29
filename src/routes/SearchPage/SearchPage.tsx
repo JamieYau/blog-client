@@ -3,10 +3,11 @@ import SearchBar from "@/components/SearchBar";
 import useSearch from "@/contexts/useSearch";
 import { Post } from "@/types/models";
 import { X } from "lucide-react";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 
 export default function SearchPage() {
-  const { searchParams, recentSearches, setRecentSearches } = useSearch();
+  const { searchParams, recentSearches, setRecentSearches, setSearchQuery } =
+    useSearch();
   const posts = useLoaderData() as Post[];
 
   const removeSearchItem = (index: number) => {
@@ -38,10 +39,14 @@ export default function SearchPage() {
               Recent searches
             </h1>
             <ul className="[&>*:not(:last-child)]:border-b">
-              {recentSearches.map((search, i) => (
+              {recentSearches.map((recentItem, i) => (
                 <li key={i} className="flex w-full justify-between py-4">
-                  <span>{search}</span>
-                  <span>{i}</span>
+                  <Link
+                    to={`/search?searchTerm=${encodeURIComponent(recentItem)}`}
+                    onClick={() => (setSearchQuery(recentItem))}
+                  >
+                    {recentItem}
+                  </Link>
                   <X strokeWidth={1.1} onClick={() => removeSearchItem(i)} />
                 </li>
               ))}
