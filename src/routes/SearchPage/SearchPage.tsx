@@ -1,27 +1,12 @@
-import { getPosts } from "@/api";
 import PostItem from "@/components/PostItem";
 import SearchBar from "@/components/SearchBar";
 import useSearch from "@/contexts/useSearch";
 import { Post } from "@/types/models";
-import { useEffect, useState } from "react";
+import { useLoaderData } from "react-router-dom";
 
 export default function SearchPage() {
   const { searchParams, recentSearches } = useSearch();
-  const [posts, setPosts] = useState<Post[]>([]);
-
-  // Fetch posts whenever searchParams change
-  useEffect(() => {
-    (async () => {
-      try {
-        const posts = searchParams.get("searchTerm")
-          ? await getPosts({ searchTerm: searchParams.get("searchTerm") || "" })
-          : await getPosts();
-        setPosts(posts);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      }
-    })();
-  }, [searchParams]);
+  const posts = useLoaderData() as Post[];
 
   return (
     <div className="flex w-full flex-col p-2">

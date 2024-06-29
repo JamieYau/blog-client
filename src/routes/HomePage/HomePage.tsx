@@ -14,7 +14,7 @@ export default function HomePage() {
         Blog Posts
       </h1>
       <ul className="flex flex-col gap-4">
-        {posts.map((post: Post) => (
+        {posts.map((post) => (
           <PostItem key={post._id} post={post} />
         ))}
       </ul>

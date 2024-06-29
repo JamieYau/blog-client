@@ -15,6 +15,7 @@ import "prismjs/themes/prism-tomorrow.css";
 import "prismjs/plugins/line-numbers/prism-line-numbers.css";
 import "prismjs";
 import SearchPage from "./routes/SearchPage/SearchPage";
+import { searchPageLoader } from "./routes/SearchPage/SearchPage.loader";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
       {
         path: "search",
         element: <SearchPage />,
+        loader: searchPageLoader,
       },
       {
         path: "posts/:postId",

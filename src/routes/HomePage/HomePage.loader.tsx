@@ -1,4 +1,4 @@
-import { getPosts } from "../../api";
+import { getPosts } from "@/api";
 
 export default async function homePageLoader() {
   try {
