@@ -35,14 +35,24 @@ export async function formatWithAuthor(
   }
 }
 
-export async function getPosts(): Promise<Post[]> {
-  // Fetch the list of blog posts from your API
+export async function getPosts(searchParams?: {
+  [key: string]: string;
+}): Promise<Post[]> {
   try {
-    const response = await fetch(`${BASE_URL}/posts`);
-    const postsData: ApiResponse<Post[]> = await response.json();
-    if (!postsData.success) {
-      throw new Error("Failed to fetch post: " + postsData.errors);
+    const url = new URL(`${BASE_URL}/posts`);
+    if (searchParams) {
+      Object.keys(searchParams).forEach((key) =>
+        url.searchParams.append(key, searchParams[key]),
+      );
     }
+
+    const response = await fetch(url.toString());
+    const postsData: ApiResponse<Post[]> = await response.json();
+
+    if (!postsData.success) {
+      throw new Error("Failed to fetch posts: " + postsData.errors);
+    }
+
     // Fetch the author's name for each post
     const postsWithAuthors = await Promise.all(
       postsData.data.map(formatWithAuthor),
@@ -221,13 +231,16 @@ export async function toggleLikePost(postId: string): Promise<Post> {
 
 export async function toggleLikeComment(commentId: string): Promise<Comment> {
   const token = localStorage.getItem("accessToken");
-  const response = await fetch(`${BASE_URL}/comments/${commentId}/toggle-like`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
+  const response = await fetch(
+    `${BASE_URL}/comments/${commentId}/toggle-like`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     },
-  });
+  );
 
   if (!response.ok) {
     throw new Error("Failed to toggle like");
