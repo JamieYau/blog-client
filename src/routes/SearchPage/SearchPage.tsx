@@ -1,7 +1,7 @@
 import { getPosts } from "@/api";
 import { Post } from "@/types/models";
 import { Search } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export default function SearchPage() {
@@ -10,25 +10,12 @@ export default function SearchPage() {
     searchParams.get("searchTerm") || "",
   );
   const [posts, setPosts] = useState<Post[]>([]);
-
-  //use effect for /search with no params, will give suggestions
-  //   useEffect(() => {
-  //     const fetchPosts = async () => {
-  //       try {
-  //         const posts = searchQuery
-  //           ? await getPosts({ searchTerm: searchQuery })
-  //           : await getPosts();
-  //         setPosts(posts);
-  //       } catch (error) {
-  //         console.error("Error fetching posts:", error);
-  //       }
-  //     };
-  //     fetchPosts();
-  //   }, [searchQuery]);
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
 
   const handleSearchSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSearchParams({ searchTerm: searchQuery });
+    setRecentSearches((prev) => [...new Set([searchQuery, ...prev])]);
     try {
       const posts = searchQuery
         ? await getPosts({ searchTerm: searchQuery })
@@ -55,11 +42,11 @@ export default function SearchPage() {
         />
       </form>
       <section>
-        {searchQuery ? (
+        {searchParams.get("searchTerm") ? (
           <>
-            <h1 className="text-muted-foreground">
+            <h1 className="my-7 text-2xl font-semibold tracking-tight text-muted-foreground">
               Results for
-              <span className="text-foreground">
+              <span className="ml-1 text-foreground">
                 {searchParams.get("searchTerm")}
               </span>
             </h1>
@@ -70,7 +57,16 @@ export default function SearchPage() {
             </ul>
           </>
         ) : (
-          <div>Recent Searches</div>
+          <>
+            <h1 className="my-7 text-2xl font-semibold tracking-tight">
+              Recent searches
+            </h1>
+            <ul>
+              {recentSearches.map((postName, i) => (
+                <li key={i}>{postName}</li>
+              ))}
+            </ul>
+          </>
         )}
       </section>
     </div>
