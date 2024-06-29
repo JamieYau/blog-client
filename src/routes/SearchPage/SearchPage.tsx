@@ -1,7 +1,7 @@
 import { getPosts } from "@/api";
 import PostItem from "@/components/PostItem";
+import SearchBar from "@/components/SearchBar";
 import { Post } from "@/types/models";
-import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
@@ -35,19 +35,12 @@ export default function SearchPage() {
 
   return (
     <div className="flex w-full flex-col p-2">
-      <form
+      <SearchBar
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
         onSubmit={handleSearchSubmit}
-        className="flex items-center rounded-full border bg-transparent sm:hidden"
-      >
-        <Search className="mx-3 min-h-6 min-w-6 stroke-[1.5]" />
-        <input
-          type="text"
-          placeholder="Search"
-          className="w-full rounded border border-none bg-transparent px-5 py-3 pl-0 outline-none placeholder:text-muted-foreground"
-          value={searchQuery}
-          onChange={(event) => setSearchQuery(event.target.value)}
-        />
-      </form>
+        formClassName="flex border bg-transparent sm:hidden"
+      />
       <section>
         {searchParams.get("searchTerm") ? (
           <>

@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { LogOut, Search } from "lucide-react";
 import { useState } from "react";
+import SearchBar from "@/components/SearchBar";
 const bigLogo = "/logo1crop.png";
 const logo = "/logo2crop.png";
 
@@ -44,19 +45,13 @@ export default function Nav() {
           <img src={logo} alt="</>" className="h-10 sm:hidden" />
         </Link>
         <div className="flex w-full items-center justify-end gap-6 sm:justify-between">
-          <form
+          <SearchBar
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
             onSubmit={handleSearchSubmit}
-            className="ml-4 hidden w-64 items-center rounded-full bg-muted sm:flex"
-          >
-            <Search className="mx-3 min-h-6 min-w-6 stroke-[1.5] text-muted-foreground" />
-            <input
-              type="text"
-              placeholder="Search"
-              className="w-full rounded border border-none bg-transparent px-5 py-[10px] pl-0 outline-none placeholder:text-muted-foreground"
-              value={searchQuery}
-              onChange={(event) => setSearchQuery(event.target.value)}
-            />
-          </form>
+            formClassName="ml-4 hidden w-64 items-center bg-muted sm:flex"
+            svgClassName="text-muted-foreground"
+          />
           <Link to="/search" className="sm:hidden">
             <Search className="stroke-[1.5] text-muted-foreground" />
           </Link>
