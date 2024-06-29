@@ -18,7 +18,7 @@ export default function PostItem({ post }: PostItemProps) {
       >
         <img
           src={post.coverImageUrl || placeholder}
-          className="aspect-[4/3] w-full max-w-lg object-cover"
+          className="aspect-[4/3] w-full md:max-w-lg object-cover"
         />
         <div className="flex min-h-full w-full flex-col text-muted-foreground">
           <h2 className="mb-2 text-2xl font-bold text-foreground">

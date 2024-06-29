@@ -1,13 +1,12 @@
 import { Post } from "../types/models";
-import { FaRegComment } from "react-icons/fa";
 import { Badge } from "./ui/badge";
 import Prism from "prismjs";
-import { AiOutlineLike } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import { toggleLikePost } from "@/api";
 import { cn } from "@/lib/utils";
 import useAuth from "@/contexts/useAuth";
 import { Separator } from "./ui/separator";
+import { Heart, MessageCircle } from "lucide-react";
 
 interface postProps {
   post: Post;
@@ -55,14 +54,19 @@ export default function PostDetails({ post, commentCount }: postProps) {
               },
             )}
           >
-            <AiOutlineLike className="h-5 w-5" onClick={handleToggleLike} />
+            <Heart
+              className={cn("h-5 w-5", {
+                "fill-red-500 text-red-500": userLiked,
+              })}
+              onClick={handleToggleLike}
+            />
             <span className="">{likes}</span>
           </span>
           <a
             href="#comments"
             className="flex cursor-pointer items-center gap-1 leading-none hover:text-foreground"
           >
-            <FaRegComment className="" />
+            <MessageCircle className="h-5 w-5" />
             <span className="">{commentCount}</span>
           </a>
         </div>
