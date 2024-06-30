@@ -12,13 +12,13 @@ export default function PostItem({ post }: PostItemProps) {
 
   return (
     <li className="pb-4">
-      <Link to={`/posts/${post._id}`} className="flex flex-col gap-4">
+      <Link to={`/posts/${post._id}`} className="flex flex-col gap-4 h-full">
         <img
           src={post.coverImageUrl || placeholder}
           className="aspect-[5/3] w-full object-cover md:aspect-[4/3]"
         />
-        <div className="flex min-h-full w-full flex-col text-muted-foreground">
-          <p className="my-4 flex w-full flex-1 items-end gap-1 font-medium leading-none">
+        <div className="flex h-full w-full flex-col text-muted-foreground">
+          <p className="my-4 flex w-full items-end gap-1 font-medium leading-none">
             <span>by </span>
             {post.author}
           </p>
@@ -28,11 +28,11 @@ export default function PostItem({ post }: PostItemProps) {
           <p className="mb-4 line-clamp-2 tracking-tight">
             {stripHtmlTags(post.content)}
           </p>
-          <div className="flex justify-between">
-            <p className="color-muted-foreground mb-1 text-sm">
+          <div className="flex justify-between items-end flex-1">
+            <p className="color-muted-foreground text-sm">
               {formattedDate}
             </p>
-            <span className="mb-4 space-x-2">
+            <span className="space-x-2">
               {post.tags.map((tag) => (
                 <Badge key={tag}>{tag}</Badge>
               ))}
