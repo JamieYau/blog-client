@@ -11,15 +11,21 @@ export const SearchProvider = ({ children }: { children: ReactNode }) => {
   const [searchQuery, setSearchQuery] = useState(
     searchParams.get("searchTerm") || "",
   );
+  const [sortOrder, setSortOrder] = useState(searchParams.get("order") || "");
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const navigate = useNavigate();
 
   const handleSearchSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSearchParams({ searchTerm: searchQuery });
-    searchQuery !== "" &&
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("searchTerm", searchQuery);
+    setSearchParams(params);
+    if (searchQuery !== "") {
       setRecentSearches((prev) => [...new Set([searchQuery, ...prev])]);
-    navigate(`/search?searchTerm=${encodeURIComponent(searchQuery)}`);
+    }
+    navigate(
+      `/search?searchTerm=${encodeURIComponent(searchQuery)}&order=${encodeURIComponent(params.get("order") || "")}`,
+    );
   };
 
   return (
@@ -32,6 +38,8 @@ export const SearchProvider = ({ children }: { children: ReactNode }) => {
         recentSearches,
         setRecentSearches,
         handleSearchSubmit,
+        sortOrder,
+        setSortOrder,
       }}
     >
       {children}

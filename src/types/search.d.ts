@@ -8,4 +8,6 @@ export interface SearchContextType {
   recentSearches: string[];
   setRecentSearches: React.Dispatch<React.SetStateAction<string[]>>;
   handleSearchSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  sortOrder: string;
+  setSortOrder: React.Dispatch<React.SetStateAction<string>>;
 }
