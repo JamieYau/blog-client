@@ -44,6 +44,7 @@ export default function SearchPage() {
           <>
             <div className="flex items-center justify-between">
               <h1 className="my-7 text-2xl font-semibold tracking-tight text-muted-foreground sm:mt-0 md:text-4xl">
+                <span className="mr-2">{posts.length}</span>
                 Results for
                 <span className="ml-1 text-foreground md:ml-2">
                   {searchParams.get("searchTerm")}
