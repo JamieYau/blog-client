@@ -34,7 +34,7 @@ export default function Nav() {
         </Link>
         <div className="flex w-full items-center justify-end gap-6 sm:justify-between">
           <SearchBar
-            formClassName="ml-4 hidden w-64 items-center bg-muted sm:flex"
+            containerClassName="ml-4 hidden w-64 sm:block bg-muted"
             svgClassName="text-muted-foreground"
           />
           <Link to="/search" className="sm:hidden">
