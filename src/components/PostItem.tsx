@@ -2,13 +2,14 @@ import { Link } from "react-router-dom";
 import { Post } from "@/types/models";
 import placeholder from "/placeholder.jpg";
 import { Badge } from "@/components/ui/badge";
+import { formatDate } from "@/utils/formatDate";
 
 interface PostItemProps {
   post: Post;
 }
 
 export default function PostItem({ post }: PostItemProps) {
-  const formattedDate = new Date(post.createdAt).toLocaleDateString();
+  const formattedDate = formatDate(post.createdAt);
 
   return (
     <li className="pb-4">

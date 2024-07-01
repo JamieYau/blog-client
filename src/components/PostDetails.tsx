@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import useAuth from "@/contexts/useAuth";
 import { Separator } from "./ui/separator";
 import { Heart, MessageCircle } from "lucide-react";
+import { format } from "date-fns";
 
 interface postProps {
   post: Post;
@@ -41,7 +42,9 @@ export default function PostDetails({ post, commentCount }: postProps) {
       <h1 className="my-8 text-5xl font-bold">{post.title}</h1>
       <div className="flex pb-8 font-medium text-muted-foreground">
         <p className="border-r pr-4">{post.author}</p>
-        <p className="pl-4">{new Date(post.createdAt).toLocaleDateString()}</p>
+        <p className="pl-4">
+          {format(post.createdAt, "dd MMMM yyyy")}
+        </p>
       </div>
       <Separator />
       <div className="flex w-full justify-between p-4">
