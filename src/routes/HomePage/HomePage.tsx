@@ -13,7 +13,7 @@ export default function HomePage() {
       <h1 className="mb-10 w-full border-b pb-8 text-center text-4xl font-semibold">
         Blog Posts
       </h1>
-      <ul className="flex flex-col gap-8 md:grid md:grid-cols-2">
+      <ul className="flex flex-col gap-8 md:grid md:grid-cols-6">
         {posts.map((post) => (
           <PostItem key={post._id} post={post} />
         ))}

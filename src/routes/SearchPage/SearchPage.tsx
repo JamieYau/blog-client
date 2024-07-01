@@ -59,7 +59,7 @@ export default function SearchPage() {
                 </SelectContent>
               </Select>
             </div>
-            <ul className="flex flex-col gap-8 md:grid md:grid-cols-2">
+            <ul className="flex flex-col gap-8 md:grid md:grid-cols-6">
               {posts.map((post) => (
                 <PostItem key={post._id} post={post} />
               ))}

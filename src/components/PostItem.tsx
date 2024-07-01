@@ -17,11 +17,11 @@ export default function PostItem({ post }: PostItemProps) {
   const userLiked = user ? post.likes.includes(user.userId) : false;
 
   return (
-    <li className="pb-4">
+    <li className="col-span-2 pb-4 [&:nth-child(-n+2)]:col-span-3 [&:nth-child(-n+2)]:mb-8">
       <Link to={`/posts/${post._id}`} className="flex h-full flex-col gap-4">
         <img
           src={post.coverImageUrl || placeholder}
-          className="aspect-[5/3] w-full object-cover md:aspect-[4/3]"
+          className="aspect-[5/3] w-full rounded-sm object-cover md:aspect-[4/3]"
         />
         <div className="flex h-full w-full flex-col text-muted-foreground">
           <p className="my-4 flex w-full items-end gap-1 font-medium leading-none">
