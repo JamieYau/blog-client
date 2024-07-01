@@ -1,7 +1,18 @@
+import Post from "@/types/models"
+
 export interface ApiResponse<T> {
   success: boolean;
   data: T;
   errors?: string;
+}
+
+export interface PostsResponse {
+  data: Post[];
+  meta: {
+    totalPosts: number;
+    currentPage: number;
+    totalPages: number;
+  };
 }
 
 export interface LoginResponse {
