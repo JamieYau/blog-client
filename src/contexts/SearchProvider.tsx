@@ -13,6 +13,10 @@ export const SearchProvider = ({ children }: { children: ReactNode }) => {
   );
   const [sortOrder, setSortOrder] = useState(searchParams.get("order") || "");
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(
+    Number(searchParams.get("page")) || 1,
+  );
+  const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
 
   const handleSearchSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -28,6 +32,14 @@ export const SearchProvider = ({ children }: { children: ReactNode }) => {
     );
   };
 
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", page.toString());
+    setSearchParams(params);
+    navigate(`/search?${params.toString()}`);
+  };
+
   return (
     <SearchContext.Provider
       value={{
@@ -40,6 +52,11 @@ export const SearchProvider = ({ children }: { children: ReactNode }) => {
         handleSearchSubmit,
         sortOrder,
         setSortOrder,
+        currentPage,
+        setCurrentPage,
+        totalPages,
+        setTotalPages,
+        handlePageChange,
       }}
     >
       {children}

@@ -1,10 +1,8 @@
 import PostItem from "@/components/PostItem";
 import SearchBar from "@/components/SearchBar";
 import useSearch from "@/contexts/useSearch";
-import { Post } from "@/types/models";
 import { X } from "lucide-react";
 import { Link, useLoaderData } from "react-router-dom";
-
 import {
   Select,
   SelectContent,
@@ -12,6 +10,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { PostsResponse } from "@/types/api";
+import PaginationComponent from "@/components/PaginationComponent";
+import { useEffect } from "react";
 
 export default function SearchPage() {
   const {
@@ -21,8 +22,12 @@ export default function SearchPage() {
     setSearchQuery,
     setSearchParams,
     setSortOrder,
+    currentPage,
+    setCurrentPage,
+    setTotalPages,
+    handlePageChange,
   } = useSearch();
-  const posts = useLoaderData() as Post[];
+  const { data: posts, meta } = useLoaderData() as PostsResponse;
 
   const removeSearchItem = (index: number) => {
     const newRecentSearches = recentSearches.filter((_, i) => i !== index);
@@ -36,15 +41,22 @@ export default function SearchPage() {
     setSearchParams(params);
   };
 
+  useEffect(() => {
+    if (meta) {
+      setCurrentPage(meta.currentPage);
+      setTotalPages(meta.totalPages);
+    }
+  }, [meta, setCurrentPage, setTotalPages]);
+
   return (
-    <div className="flex w-full flex-col p-2">
+    <div className="flex w-full flex-col p-2 flex-1">
       <SearchBar formClassName="flex border bg-transparent sm:hidden" />
-      <section>
+      <section className="flex flex-col flex-1">
         {searchParams.get("searchTerm") ? (
           <>
             <div className="flex items-center justify-between">
               <h1 className="my-7 text-2xl font-semibold tracking-tight text-muted-foreground sm:mt-0 md:text-4xl">
-                <span className="mr-2">{posts.length}</span>
+                <span className="mr-2">{meta.totalPosts}</span>
                 Results for
                 <span className="ml-1 text-foreground md:ml-2">
                   {searchParams.get("searchTerm")}
@@ -60,11 +72,16 @@ export default function SearchPage() {
                 </SelectContent>
               </Select>
             </div>
-            <ul className="flex flex-col gap-8 md:grid md:grid-cols-6">
+            <ul className="flex flex-col gap-8 md:grid md:grid-cols-6 flex-1">
               {posts.map((post) => (
                 <PostItem key={post._id} post={post} />
               ))}
             </ul>
+            <PaginationComponent
+              currentPage={currentPage}
+              totalPages={meta.totalPages}
+              onPageChange={handlePageChange}
+            />
           </>
         ) : (
           <>
