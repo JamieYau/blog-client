@@ -1,7 +1,7 @@
 import { Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import useSearch from "@/contexts/useSearch";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, FormEvent } from "react";
 import { Link } from "react-router-dom";
 
 interface SearchBarProps {
@@ -26,6 +26,8 @@ export default function SearchBar({
   } = useSearch();
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -42,6 +44,12 @@ export default function SearchBar({
     };
   }, []);
 
+  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+    setShowDropdown(false);
+    inputRef.current?.blur();
+    handleSearchSubmit(e);
+  };
+
   const handleRecentSearchClick = (search: string) => {
     setSearchQuery(search);
     setShowDropdown(false);
@@ -55,13 +63,14 @@ export default function SearchBar({
   return (
     <div className={cn("relative rounded-full", containerClassName)}>
       <form
-        onSubmit={handleSearchSubmit}
+        onSubmit={(e) => handleFormSubmit(e)}
         className={cn("flex items-center rounded-full", formClassName)}
       >
         <Search
           className={cn("mx-3 min-h-6 min-w-6 stroke-[1.5]", svgClassName)}
         />
         <input
+          ref={inputRef}
           type="text"
           placeholder="Search"
           className={cn(
