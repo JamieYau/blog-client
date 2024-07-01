@@ -42,9 +42,7 @@ export default function PostDetails({ post, commentCount }: postProps) {
       <h1 className="my-8 text-5xl font-bold">{post.title}</h1>
       <div className="flex pb-8 font-medium text-muted-foreground">
         <p className="border-r pr-4">{post.author}</p>
-        <p className="pl-4">
-          {format(post.createdAt, "dd MMMM yyyy")}
-        </p>
+        <p className="pl-4">{format(post.createdAt, "dd MMMM yyyy")}</p>
       </div>
       <Separator />
       <div className="flex w-full justify-between p-4">
@@ -76,7 +74,9 @@ export default function PostDetails({ post, commentCount }: postProps) {
         <div>
           <span className="space-x-2">
             {post.tags.map((tag) => (
-              <Badge key={tag}>{tag}</Badge>
+              <Badge key={tag} variant={"secondary"}>
+                {tag}
+              </Badge>
             ))}
           </span>
         </div>

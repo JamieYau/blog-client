@@ -48,7 +48,9 @@ export default function PostItem({ post }: PostItemProps) {
             </div>
             <span className="space-x-2">
               {post.tags.map((tag) => (
-                <Badge key={tag}>{tag}</Badge>
+                <Badge key={tag} variant={"secondary"}>
+                  {tag}
+                </Badge>
               ))}
             </span>
           </div>
