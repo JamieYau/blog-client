@@ -1,5 +1,5 @@
 const BASE_URL = import.meta.env.VITE_API_URL;
-import { ApiResponse, LoginResponse, RefreshTokenResponse } from "./types/api";
+import { ApiResponse, LoginResponse, PostsResponse, RefreshTokenResponse } from "./types/api";
 import { Post, Comment } from "./types/models";
 
 function isPost(item: Post | Comment): item is Post {
@@ -37,7 +37,7 @@ export async function formatWithAuthor(
 
 export async function getPosts(searchParams?: {
   [key: string]: string;
-}): Promise<Post[]> {
+}): Promise<PostsResponse> {
   try {
     const url = new URL(`${BASE_URL}/posts`);
     if (searchParams) {
@@ -47,17 +47,22 @@ export async function getPosts(searchParams?: {
     }
 
     const response = await fetch(url.toString());
-    const postsData: ApiResponse<Post[]> = await response.json();
+    const postsData = await response.json();
 
     if (!postsData.success) {
       throw new Error("Failed to fetch posts: " + postsData.errors);
     }
 
+    // Destructure data and meta from postsData.data
+    const { data, meta } = postsData;
+
     // Fetch the author's name for each post
-    const postsWithAuthors = await Promise.all(
-      postsData.data.map(formatWithAuthor),
-    );
-    return postsWithAuthors as Post[];
+    const postsWithAuthors = await Promise.all(data.map(formatWithAuthor));
+
+    return {
+      data: postsWithAuthors as Post[],
+      meta,
+    };
   } catch (error) {
     console.error("Error fetching posts:", error);
     throw error;

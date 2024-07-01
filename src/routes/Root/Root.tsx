@@ -10,7 +10,7 @@ export default function Root() {
     <>
       <Providers>
         <Nav />
-        <main className="m-auto flex h-full max-w-6xl flex-1 flex-col p-4 sm:p-8">
+        <main className="mx-auto flex h-full max-w-6xl flex-1 flex-col p-4 sm:p-8">
           <Outlet />
         </main>
         <Footer />

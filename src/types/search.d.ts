@@ -10,4 +10,9 @@ export interface SearchContextType {
   handleSearchSubmit: (e: FormEvent<HTMLFormElement>) => void;
   sortOrder: string;
   setSortOrder: React.Dispatch<React.SetStateAction<string>>;
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  totalPages: number;
+  setTotalPages: React.Dispatch<React.SetStateAction<number>>;
+  handlePageChange: (page: number) => void;
 }

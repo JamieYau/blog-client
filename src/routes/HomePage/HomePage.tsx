@@ -1,9 +1,10 @@
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import PostItem from "../../components/PostItem";
-import { Post } from "../../types/models";
+import { PostsResponse } from "@/types/api";
+import { buttonVariants } from "@/components/ui/button";
 
 export default function HomePage() {
-  const posts = useLoaderData() as Post[];
+  const { data: posts, meta } = useLoaderData() as PostsResponse;
   if (!posts) {
     // Handle case where posts is not yet loaded or is null
     return null; // or loading indicator or error message
@@ -18,6 +19,14 @@ export default function HomePage() {
           <PostItem key={post._id} post={post} />
         ))}
       </ul>
+
+      {meta.totalPages > 1 && (
+        <div className="mt-4">
+          <Link to="/search?searchTerm=a" className={buttonVariants({ variant: "default" })}>
+            See more posts
+          </Link>
+        </div>
+      )}
     </section>
   );
 }
