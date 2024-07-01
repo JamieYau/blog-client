@@ -28,7 +28,6 @@ export default function SearchBar({
   const dropdownRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -43,6 +42,14 @@ export default function SearchBar({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    if (searchQuery.trim() !== "") {
+      setShowDropdown(true);
+    } else {
+      setShowDropdown(false);
+    }
+  }, [searchQuery]);
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     setShowDropdown(false);
@@ -79,7 +86,6 @@ export default function SearchBar({
           )}
           value={searchQuery}
           onChange={(event) => setSearchQuery(event.target.value)}
-          onFocus={() => setShowDropdown(true)}
         />
       </form>
       {showDropdown && recentSearches.length > 0 && (
