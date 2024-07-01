@@ -3,17 +3,22 @@ import { Post } from "@/types/models";
 import placeholder from "/placeholder.jpg";
 import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/utils/formatDate";
+import { Heart } from "lucide-react";
+import useAuth from "@/contexts/useAuth";
+import { cn } from "@/lib/utils";
 
 interface PostItemProps {
   post: Post;
 }
 
 export default function PostItem({ post }: PostItemProps) {
+  const { user } = useAuth();
   const formattedDate = formatDate(post.createdAt);
+  const userLiked = user ? post.likes.includes(user.userId) : false;
 
   return (
     <li className="pb-4">
-      <Link to={`/posts/${post._id}`} className="flex flex-col gap-4 h-full">
+      <Link to={`/posts/${post._id}`} className="flex h-full flex-col gap-4">
         <img
           src={post.coverImageUrl || placeholder}
           className="aspect-[5/3] w-full object-cover md:aspect-[4/3]"
@@ -29,10 +34,18 @@ export default function PostItem({ post }: PostItemProps) {
           <p className="mb-4 line-clamp-2 tracking-tight">
             {stripHtmlTags(post.content)}
           </p>
-          <div className="flex justify-between items-end flex-1">
-            <p className="color-muted-foreground text-sm">
-              {formattedDate}
-            </p>
+          <div className="flex flex-1 items-end justify-between text-sm">
+            <div className="flex items-center gap-3">
+              <p className="">{formattedDate}</p>
+              <p className="flex items-center gap-1">
+                <Heart
+                  className={cn("h-4 w-4", {
+                    "fill-red-500 text-red-500": userLiked,
+                  })}
+                />
+                <span className="">{post.likes.length}</span>
+              </p>
+            </div>
             <span className="space-x-2">
               {post.tags.map((tag) => (
                 <Badge key={tag}>{tag}</Badge>

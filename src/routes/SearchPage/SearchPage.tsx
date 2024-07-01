@@ -50,7 +50,7 @@ export default function SearchPage() {
                 </span>
               </h1>
               <Select onValueChange={(value) => handleSortChange(value)}>
-                <SelectTrigger className="focus:ring-transparent w-fit">
+                <SelectTrigger className="w-fit focus:ring-transparent">
                   <SelectValue placeholder="Sort by date" />
                 </SelectTrigger>
                 <SelectContent>
@@ -59,7 +59,7 @@ export default function SearchPage() {
                 </SelectContent>
               </Select>
             </div>
-            <ul>
+            <ul className="flex flex-col gap-8 md:grid md:grid-cols-2">
               {posts.map((post) => (
                 <PostItem key={post._id} post={post} />
               ))}
