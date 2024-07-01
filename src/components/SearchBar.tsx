@@ -6,15 +6,11 @@ import { Link } from "react-router-dom";
 
 interface SearchBarProps {
   containerClassName?: string;
-  formClassName?: string;
-  inputClassName?: string;
   svgClassName?: string;
 }
 
 export default function SearchBar({
   containerClassName,
-  formClassName,
-  inputClassName,
   svgClassName,
 }: SearchBarProps) {
   const {
@@ -71,7 +67,7 @@ export default function SearchBar({
     <div className={cn("relative rounded-full", containerClassName)}>
       <form
         onSubmit={(e) => handleFormSubmit(e)}
-        className={cn("flex items-center rounded-full", formClassName)}
+        className={"flex items-center rounded-full"}
       >
         <Search
           className={cn("mx-3 min-h-6 min-w-6 stroke-[1.5]", svgClassName)}
@@ -80,10 +76,7 @@ export default function SearchBar({
           ref={inputRef}
           type="text"
           placeholder="Search"
-          className={cn(
-            "w-full rounded border-none bg-transparent px-5 py-3 pl-0 outline-none placeholder:text-muted-foreground",
-            inputClassName,
-          )}
+          className="w-full rounded border-none bg-transparent px-5 py-3 pl-0 outline-none placeholder:text-muted-foreground"
           value={searchQuery}
           onChange={(event) => setSearchQuery(event.target.value)}
         />

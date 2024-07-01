@@ -41,7 +41,9 @@ export default function SearchPage() {
 
   return (
     <div className="flex w-full flex-1 flex-col p-2">
-      <SearchBar formClassName="flex border bg-transparent sm:hidden" />
+      <SearchBar
+        containerClassName="sm:hidden bg-transparent border"
+      />
       <section className="flex flex-1 flex-col">
         <div className="flex items-center justify-between">
           <h1 className="my-7 text-2xl font-semibold tracking-tight text-muted-foreground sm:mt-0 md:text-4xl">
