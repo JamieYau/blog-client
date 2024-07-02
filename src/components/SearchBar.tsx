@@ -2,6 +2,7 @@ import { Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import useSearch from "@/contexts/useSearch";
 import { useState, useRef, useEffect, FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface SearchBarProps {
   containerClassName?: string;
@@ -15,19 +16,23 @@ export default function SearchBar({
   const {
     searchQuery,
     setSearchQuery,
+    setSearchParams,
     handleSearchSubmit,
     recentSearches,
     setRecentSearches,
+    sortOrder,
   } = useSearch();
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
         dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
+        !dropdownRef.current.contains(event.target as Node) &&
+        !inputRef.current?.contains(event.target as Node)
       ) {
         setShowDropdown(false);
       }
@@ -39,9 +44,7 @@ export default function SearchBar({
   }, []);
 
   useEffect(() => {
-    if (searchQuery.trim() !== "") {
-      setShowDropdown(true);
-    } else {
+    if (searchQuery.trim() === "") {
       setShowDropdown(false);
     }
   }, [searchQuery]);
@@ -52,9 +55,16 @@ export default function SearchBar({
     handleSearchSubmit(e);
   };
 
-  const handleRecentSearchClick = (search: string) => {
-    setSearchQuery(search);
+  const handleRecentSearchClick = (recentItem: string) => {
+    setSearchQuery(recentItem);
     setShowDropdown(false);
+
+    const params = new URLSearchParams();
+    params.set("searchTerm", recentItem);
+    setSearchParams(params);
+    navigate(
+      `/search?searchTerm=${encodeURIComponent(recentItem)}&order=${encodeURIComponent(sortOrder)}`,
+    );
   };
 
   const removeSearchItem = (
@@ -81,7 +91,11 @@ export default function SearchBar({
           placeholder="Search"
           className="w-full rounded border-none bg-transparent px-5 py-3 pl-0 outline-none placeholder:text-muted-foreground"
           value={searchQuery}
-          onChange={(event) => setSearchQuery(event.target.value)}
+          onChange={(event) => {
+            setSearchQuery(event.target.value),
+              event.target.value && setShowDropdown(true);
+          }}
+          onFocus={() => setShowDropdown(true)}
         />
       </form>
       {showDropdown && recentSearches.length > 0 && (
