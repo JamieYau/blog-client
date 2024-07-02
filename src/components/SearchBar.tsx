@@ -2,7 +2,6 @@ import { Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import useSearch from "@/contexts/useSearch";
 import { useState, useRef, useEffect, FormEvent } from "react";
-import { Link } from "react-router-dom";
 
 interface SearchBarProps {
   containerClassName?: string;
@@ -58,7 +57,11 @@ export default function SearchBar({
     setShowDropdown(false);
   };
 
-  const removeSearchItem = (index: number) => {
+  const removeSearchItem = (
+    event: React.MouseEvent<SVGSVGElement, MouseEvent>,
+    index: number,
+  ) => {
+    event.stopPropagation();
     const newRecentSearches = recentSearches.filter((_, i) => i !== index);
     setRecentSearches(newRecentSearches);
   };
@@ -90,16 +93,14 @@ export default function SearchBar({
             {recentSearches.map((recentItem, index) => (
               <li
                 key={index}
-                className="flex cursor-pointer justify-between px-4 py-2 hover:bg-gray-100"
+                className="flex cursor-pointer justify-between px-4 py-2 hover:bg-muted"
                 onClick={() => handleRecentSearchClick(recentItem)}
               >
-                <Link
-                  to={`/search?searchTerm=${encodeURIComponent(recentItem)}`}
-                  onClick={() => setSearchQuery(recentItem)}
-                >
-                  {recentItem}
-                </Link>
-                <X strokeWidth={1.1} onClick={() => removeSearchItem(index)} />
+                {recentItem}
+                <X
+                  strokeWidth={1.1}
+                  onClick={(e) => removeSearchItem(e, index)}
+                />
               </li>
             ))}
           </ul>
