@@ -13,13 +13,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { LogOut, Search } from "lucide-react";
 import SearchBar from "@/components/SearchBar";
+import getInitials from "@/utils/formatInitials";
 const bigLogo = "/logo1crop.png";
 const logo = "/logo2crop.png";
 
 export default function Nav() {
   const { user, logout } = useAuth();
   const isLoggedIn = user !== null;
-  const userInitial = isLoggedIn ? user.username.charAt(0).toUpperCase() : "";
+  const userInitials = isLoggedIn ? getInitials(user.username) : "";
 
   return (
     <header className="flex w-full justify-center shadow-sm">
@@ -46,7 +47,7 @@ export default function Nav() {
               <DropdownMenuTrigger>
                 <Avatar>
                   <AvatarImage />
-                  <AvatarFallback>{userInitial}</AvatarFallback>
+                  <AvatarFallback>{userInitials}</AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent>

@@ -2,6 +2,7 @@ import { Link, useLoaderData } from "react-router-dom";
 import PostItem from "../../components/PostItem";
 import { PostsResponse } from "@/types/api";
 import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export default function HomePage() {
   const { data: posts, meta } = useLoaderData() as PostsResponse;
@@ -21,8 +22,8 @@ export default function HomePage() {
       </ul>
 
       {meta.totalPages > 1 && (
-        <div className="mt-4">
-          <Link to="/search?searchTerm=a" className={buttonVariants({ variant: "default" })}>
+        <div className="mt-4 flex justify-center">
+          <Link to="/search?searchTerm=a" className={cn(buttonVariants({ variant: "outline" }), "border-primary rounded-full tracking-tight font-normal")}>
             See more posts
           </Link>
         </div>

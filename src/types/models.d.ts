@@ -15,7 +15,7 @@ export interface Post {
   tags: string[];
   createdAt: string;
   updatedAt: string;
-  author?: string;
+  author: string;
   likes: string[];
 }
 
@@ -26,6 +26,6 @@ export interface Comment {
   postId: string;
   createdAt: string;
   updatedAt: string;
-  author?: string;
+  author: string;
   likes: string[];
 }

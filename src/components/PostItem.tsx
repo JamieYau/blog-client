@@ -6,6 +6,9 @@ import { formatDate } from "@/utils/formatDate";
 import { Heart } from "lucide-react";
 import useAuth from "@/contexts/useAuth";
 import { cn } from "@/lib/utils";
+import getInitials from "@/utils/formatInitials";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+const tempAvatar = "./avatar.png";
 
 interface PostItemProps {
   post: Post;
@@ -24,8 +27,11 @@ export default function PostItem({ post }: PostItemProps) {
           className="aspect-[5/3] w-full rounded-sm object-cover md:aspect-[4/3]"
         />
         <div className="flex h-full w-full flex-col text-muted-foreground">
-          <p className="my-4 flex w-full items-end gap-1 font-medium leading-none">
-            <span>by </span>
+          <p className="my-4 flex w-full items-center gap-2 leading-none tracking-tighter text-foreground">
+            <Avatar className="h-5 w-5">
+              <AvatarImage src={tempAvatar} alt="Avatar" />
+              <AvatarFallback>{getInitials(post.author)}</AvatarFallback>
+            </Avatar>
             {post.author}
           </p>
           <h2 className="mb-2 text-2xl font-bold text-foreground">
