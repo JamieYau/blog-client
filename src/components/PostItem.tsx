@@ -8,7 +8,7 @@ import useAuth from "@/contexts/useAuth";
 import { cn } from "@/lib/utils";
 import getInitials from "@/utils/formatInitials";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-const tempAvatar = "./avatar.png";
+import tempAvatar from "/avatar.png";
 
 interface PostItemProps {
   post: Post;
@@ -45,6 +45,7 @@ export default function PostItem({ post }: PostItemProps) {
               <p className="">{formattedDate}</p>
               <p className="flex items-center gap-1">
                 <Heart
+                  strokeWidth={1.4}
                   className={cn("h-4 w-4", {
                     "fill-red-500 text-red-500": userLiked,
                   })}

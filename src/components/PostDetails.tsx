@@ -1,13 +1,16 @@
-import { Post } from "../types/models";
-import { Badge } from "./ui/badge";
+import { Post } from "@/types/models";
+import { Badge } from "@/components/ui/badge";
 import Prism from "prismjs";
 import { useEffect, useState } from "react";
 import { toggleLikePost } from "@/api";
 import { cn } from "@/lib/utils";
 import useAuth from "@/contexts/useAuth";
-import { Separator } from "./ui/separator";
+import { Separator } from "@/components/ui/separator";
 import { Heart, MessageCircle } from "lucide-react";
 import { format } from "date-fns";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import getInitials from "@/utils/formatInitials";
+import tempAvatar from "/avatar.png";
 
 interface postProps {
   post: Post;
@@ -39,10 +42,20 @@ export default function PostDetails({ post, commentCount }: postProps) {
   return (
     <>
       <img src={post.coverImageUrl} alt="" />
-      <h1 className="my-8 text-5xl font-bold">{post.title}</h1>
+      <h1 className="my-8 font-bold [font-size:_clamp(2em,6vw,42px)]">
+        {post.title}
+      </h1>
       <div className="flex pb-8 font-medium text-muted-foreground">
-        <p className="border-r pr-4">{post.author}</p>
-        <p className="pl-4">{format(post.createdAt, "dd MMMM yyyy")}</p>
+        <p className="flex items-center gap-2 border-r pr-4 text-foreground">
+          <Avatar className="h-10 w-10">
+            <AvatarImage src={tempAvatar} alt="Avatar" />
+            <AvatarFallback>{getInitials(post.author)}</AvatarFallback>
+          </Avatar>
+          {post.author}
+        </p>
+        <p className="flex items-center pl-4">
+          {format(post.createdAt, "dd MMMM yyyy")}
+        </p>
       </div>
       <Separator />
       <div className="flex w-full justify-between p-4">
@@ -56,6 +69,7 @@ export default function PostDetails({ post, commentCount }: postProps) {
             )}
           >
             <Heart
+              strokeWidth={1.4}
               className={cn("h-5 w-5", {
                 "fill-red-500 text-red-500": userLiked,
               })}
@@ -67,7 +81,7 @@ export default function PostDetails({ post, commentCount }: postProps) {
             href="#comments"
             className="flex cursor-pointer items-center gap-1 leading-none hover:text-foreground"
           >
-            <MessageCircle className="h-5 w-5" />
+            <MessageCircle strokeWidth={1.4} className="h-5 w-5" />
             <span className="">{commentCount}</span>
           </a>
         </div>

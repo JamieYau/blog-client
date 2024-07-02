@@ -70,6 +70,7 @@ export default function CommentItem({
             })}
           >
             <Heart
+              strokeWidth={1.4}
               className={cn("h-5 w-5", {
                 "fill-red-500 text-red-500": userLiked,
               })}
