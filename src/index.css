@@ -139,4 +139,8 @@ main {
   .post-content p {
     @apply text-base;
   }
+
+  .post-content a {
+    @apply text-indigo-600;
+  }
 }
