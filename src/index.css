@@ -124,4 +124,19 @@ main {
   body {
     @apply bg-background text-foreground;
   }
+  .post-content h1 {
+    @apply my-4 text-4xl font-bold;
+  }
+
+  .post-content h2 {
+    @apply my-3 text-3xl font-bold;
+  }
+
+  .post-content h3 {
+    @apply my-2 text-2xl font-semibold;
+  }
+
+  .post-content p {
+    @apply text-base;
+  }
 }
